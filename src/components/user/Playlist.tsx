@@ -108,30 +108,28 @@ export default function Playlist() {
   };
 
   return (
-    <div className="p-10 cursor-pointer group select-none flex items-center justify-center font-sans text-white">
+    <div className="p-10 cursor-pointer group select-none flex items-center justify-center font-mono text-white">
       {!token ? (
         <button
           onClick={handleLogin}
-          className="bg-green-500 text-black px-6 py-3 rounded-full font-bold"
+          className="bg-white text-black px-6 py-3 rounded-full font-bold"
         >
           Login to Spotify
         </button>
       ) : (
         <div>
-          {/* Track Info */}
           <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md">
-            <p className="text-white p-4 font-bold text-center">
+            <p className="p-2 font-bold font-mono text-center text-xs">
               {track || "Ready to Play"}
             </p>
           </div>
 
-          <div className="flex gap-3 items-center justify-center bg-black/40 p-3 rounded-full">
-            {/* Start Button vs Controls */}
+          <div className="flex gap-3 items-center justify-center rounded-full">
             {!track ? (
               <button
                 onClick={playMyPlaylist}
                 disabled={!isPlayerReady}
-                className={`px-6 py-2 rounded-full border border-white hover:bg-white hover:text-black transition ${
+                className={`px-6 py-2 rounded-full border border-white text-xs hover:bg-white text-black transition ${
                   !isPlayerReady && "opacity-50 cursor-wait"
                 }`}
               >
@@ -139,37 +137,24 @@ export default function Playlist() {
               </button>
             ) : (
               <div className="flex gap-2 items-center">
-                {/* PREV */}
-                <button
-                  onClick={handleSkipPrev}
-                  className="btn p-2 hover:text-green-400"
-                >
+                <button onClick={handleSkipPrev} className="btn text-black">
                   ⏮
                 </button>
 
-                {/* PLAY/PAUSE */}
                 <button
                   onClick={handleTogglePlay}
-                  className={`px-4 py-1 rounded text-black font-bold transition ${
+                  className={`rounded text-black font-bold transition ${
                     isPlaying ? "bg-green-400" : "bg-white"
                   }`}
                 >
                   {isPlaying ? "❚❚" : "▶"}
                 </button>
 
-                {/* NEXT */}
-                <button
-                  onClick={handleSkipNext}
-                  className="btn p-2 hover:text-green-400"
-                >
+                <button onClick={handleSkipNext} className="btn text-black">
                   ⏭
                 </button>
 
-                {/* REPEAT (Your Logic) */}
-                <button
-                  onClick={handleRepeat}
-                  className="btn text-xl w-8 text-center"
-                >
+                <button onClick={handleRepeat} className="btn text-center">
                   {repeatState === "off" && (
                     <span className="text-gray-400">×</span>
                   )}
