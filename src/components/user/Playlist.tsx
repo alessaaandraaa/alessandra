@@ -106,7 +106,12 @@ export default function Playlist() {
     const isLocal = window.location.hostname === "localhost";
     const envParams = isLocal ? "?env=dev" : "?env=prod";
 
-    window.location.href = `https://spotify-backend-eight-pink.vercel.app/login${envParams}`;
+    if (window.top) {
+      window.top.location.href = `https://spotify-backend-eight-pink.vercel.app/login${envParams}`;
+    } else {
+      // Fallback just in case
+      window.location.href = `https://spotify-backend-eight-pink.vercel.app/login${envParams}`;
+    }
   };
 
   return (
