@@ -65,6 +65,13 @@ export default function Playlist() {
         setIsPlayerReady(true);
       });
 
+      newPlayer.addListener("authentication_error", ({ message }: any) => {
+        console.error("Authentication failed!", message);
+        window.localStorage.removeItem("spotify_token");
+        setToken(null);
+        window.location.reload();
+      });
+
       newPlayer.addListener("player_state_changed", (state: any) => {
         if (!state) return;
         setTrack(state.track_window.current_track.name);
