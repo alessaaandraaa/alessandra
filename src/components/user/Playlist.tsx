@@ -15,6 +15,7 @@ export default function Playlist() {
   const [repeatState, setRepeatState] = useState<"off" | "context" | "track">(
     "off"
   );
+  const [shuffleState, setShuffleState] = useState(false);
   const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   useEffect(() => {
@@ -76,6 +77,8 @@ export default function Playlist() {
 
         const repeatModes = ["off", "context", "track"] as const;
         setRepeatState(repeatModes[state.repeat_mode]);
+
+        setShuffleState(state.shuffle);
       });
 
       newPlayer.connect();
@@ -95,6 +98,12 @@ export default function Playlist() {
 
     setRepeatState(nextState);
     spotify.setRepeat(nextState);
+  };
+
+  const handleShuffle = () => {
+    const newShuffle = !shuffleState;
+    setShuffleState(newShuffle);
+    spotify.setShuffle(newShuffle).catch((err) => console.error(err));
   };
 
   const playMyPlaylist = () => {
@@ -173,6 +182,14 @@ export default function Playlist() {
                         1
                       </span>
                     </span>
+                  )}
+                </button>
+
+                <button onClick={handleShuffle} className="btn text-center">
+                  {shuffleState ? (
+                    <span className="text-green-500">↳↰</span>
+                  ) : (
+                    <span className="text-gray-500">↳↰</span>
                   )}
                 </button>
               </div>
