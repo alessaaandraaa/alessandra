@@ -109,17 +109,6 @@ export default function Playlist() {
       .catch((err) => console.error("Playback error:", err));
   };
 
-  const handleLogin = () => {
-    const isLocal = window.location.hostname === "localhost";
-    const envParams = isLocal ? "?env=dev" : "?env=prod";
-
-    if (window.top) {
-      window.top.location.href = `https://spotify-backend-eight-pink.vercel.app/login${envParams}`;
-    } else {
-      window.location.href = `https://spotify-backend-eight-pink.vercel.app/login${envParams}`;
-    }
-  };
-
   return (
     <div className="p-10 cursor-pointer group select-none flex items-center justify-center font-mono text-white">
       {!token ? (
