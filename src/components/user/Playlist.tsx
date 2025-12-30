@@ -117,7 +117,7 @@ export default function Playlist() {
             window.location.hostname === "localhost" ? "?env=dev" : "?env=prod"
           }`}
           target="_top"
-          className="bg-green-500 text-black px-6 py-3 rounded-full font-bold inline-block no-underline"
+          className="bg-white text-black px-6 py-3 rounded-full font-bold inline-block no-underline"
         >
           Login to Spotify
         </a>
