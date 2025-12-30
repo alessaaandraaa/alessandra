@@ -10,7 +10,6 @@ export default function Playlist() {
   const [player, setPlayer] = useState<any>(undefined);
   const [deviceId, setDeviceId] = useState<string>("");
 
-  // UI State
   const [track, setTrack] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState(false);
   const [repeatState, setRepeatState] = useState<"off" | "context" | "track">(
@@ -29,7 +28,7 @@ export default function Playlist() {
       if (urlToken) {
         _token = urlToken;
         window.localStorage.setItem("spotify_token", urlToken);
-        window.history.pushState({}, "", "/"); // Clean URL
+        window.history.pushState({}, "", "/");
       }
     }
 
@@ -39,11 +38,9 @@ export default function Playlist() {
     }
   }, []);
 
-  // 2. SETUP PLAYER (Directly in Browser)
   useEffect(() => {
     if (!token) return;
 
-    // Inject SDK script
     if (!document.getElementById("spotify-player-script")) {
       const script = document.createElement("script");
       script.id = "spotify-player-script";
@@ -76,6 +73,9 @@ export default function Playlist() {
         if (!state) return;
         setTrack(state.track_window.current_track.name);
         setIsPlaying(!state.paused);
+
+        const repeatModes = ["off", "context", "track"] as const;
+        setRepeatState(repeatModes[state.repeat_mode]);
       });
 
       newPlayer.connect();
@@ -123,12 +123,15 @@ export default function Playlist() {
   return (
     <div className="p-10 cursor-pointer group select-none flex items-center justify-center font-mono text-white">
       {!token ? (
-        <button
-          onClick={handleLogin}
-          className="bg-white text-black px-6 py-3 rounded-full font-bold"
+        <a
+          href={`https://spotify-backend-eight-pink.vercel.app/login${
+            window.location.hostname === "localhost" ? "?env=dev" : "?env=prod"
+          }`}
+          target="_top"
+          className="bg-green-500 text-black px-6 py-3 rounded-full font-bold inline-block no-underline"
         >
           Login to Spotify
-        </button>
+        </a>
       ) : (
         <div>
           <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md">
