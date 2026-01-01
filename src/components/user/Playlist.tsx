@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 
 const spotify = new SpotifyWebApi();
-const MY_PLAYLIST_URI = "spotify:playlist:6ydhtIJVFO0oHEljQfP8iT";
+const MY_PLAYLIST_URI = "spotify:playlist:3FIX1b3fsmGfCkGJToMiLr";
 
 export default function Playlist() {
   // State
