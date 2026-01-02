@@ -23,12 +23,18 @@ export default function Playlist() {
     let _token = window.localStorage.getItem("spotify_token");
 
     if (!token && hash) {
-      const urlToken = new URLSearchParams(hash.substring(1)).get(
-        "access_token"
-      );
+      const params = new URLSearchParams(hash.substring(1));
+      const urlToken = params.get("access_token");
+      const urlRefreshToken = params.get("refresh_token");
+
       if (urlToken) {
         _token = urlToken;
         window.localStorage.setItem("spotify_token", urlToken);
+
+        if (urlRefreshToken) {
+          window.localStorage.setItem("spotify_refresh_token", urlRefreshToken);
+        }
+
         window.history.pushState({}, "", "/");
       }
     }
@@ -84,6 +90,37 @@ export default function Playlist() {
       newPlayer.connect();
       setPlayer(newPlayer);
     };
+  }, [token]);
+
+  useEffect(() => {
+    if (!token) return;
+
+    const refreshMyToken = async () => {
+      const refreshToken = window.localStorage.getItem("spotify_refresh_token");
+      if (!refreshToken) return;
+
+      console.log("Refreshing Token...");
+
+      try {
+        const response = await fetch(
+          `https://spotify-backend-eight-pink.vercel.app/refresh_token?refresh_token=${refreshToken}`
+        );
+        const data = await response.json();
+
+        if (data.access_token) {
+          console.log("Token Refreshed!");
+          setToken(data.access_token);
+          window.localStorage.setItem("spotify_token", data.access_token);
+          spotify.setAccessToken(data.access_token);
+        }
+      } catch (err) {
+        console.error("Failed to refresh token", err);
+      }
+    };
+
+    const interval = setInterval(refreshMyToken, 50 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, [token]);
 
   const handleTogglePlay = () => player?.togglePlay();
