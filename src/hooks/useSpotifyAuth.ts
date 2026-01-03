@@ -49,15 +49,19 @@ export function useSpotifyAuth() {
   }, []);
 
   const login = () => {
-    const w = 450,
-      h = 730;
+    const width = 450;
+    const height = 730;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
     const env = window.location.hostname === "localhost" ? "dev" : "prod";
+    const url = `https://spotify-backend-eight-pink.vercel.app/login?env=${env}`;
+
+    // ✅ FORCE POPUP: Use "_blank" and ensure string conversion
     window.open(
-      `https://spotify-backend-eight-pink.vercel.app/login?env=${env}`,
-      "Spotify",
-      `width=${w},height=${h},left=${(screen.width - w) / 2},top=${
-        (screen.height - h) / 2
-      }`
+      url,
+      "_blank", // Forces a new window/tab
+      `width=${width},height=${height},top=${top},left=${left},toolbar=no,menubar=no,location=no,status=no`
     );
   };
 
