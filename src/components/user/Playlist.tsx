@@ -32,7 +32,7 @@ export default function Playlist() {
 
   return (
     <div className="p-10 font-mono text-gray-500 select-none">
-      <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-center text-xs font-bold">
+      <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-white text-center text-xs font-bold">
         {track || "Ready to Play"}
       </div>
 
