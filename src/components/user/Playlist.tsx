@@ -93,35 +93,32 @@ export default function Playlist() {
   }, [token]);
 
   useEffect(() => {
-    if (!token) return;
-
-    const refreshMyToken = async () => {
+    const refreshAuth = async () => {
       const refreshToken = window.localStorage.getItem("spotify_refresh_token");
       if (!refreshToken) return;
 
-      console.log("Refreshing Token...");
-
       try {
-        const response = await fetch(
-          `https://spotify-backend-eight-pink.vercel.app/refresh_token?refresh_token=${refreshToken}`
+        const res = await fetch(
+          `https://spotify-backend-eight-pink.vercel.app/refresh_token?={refreshToken}`
         );
-        const data = await response.json();
+        const data = await res.json();
 
         if (data.access_token) {
-          console.log("Token Refreshed!");
+          console.log("Got new token:", data.access_token);
           setToken(data.access_token);
           window.localStorage.setItem("spotify_token", data.access_token);
           spotify.setAccessToken(data.access_token);
         }
       } catch (err) {
-        console.error("Failed to refresh token", err);
+        console.error("Auto-refresh failed", err);
       }
     };
 
-    const interval = setInterval(refreshMyToken, 50 * 60 * 1000);
+    const fiftyMinutes = 50 * 60 * 1000;
+    const interval = setInterval(refreshAuth, fiftyMinutes);
 
     return () => clearInterval(interval);
-  }, [token]);
+  }, []);
 
   const handleTogglePlay = () => player?.togglePlay();
   const handleSkipNext = () => player?.nextTrack();
