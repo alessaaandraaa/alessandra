@@ -73,6 +73,22 @@ export function useSpotifyPlayer(token: string | null) {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (!deviceId || !token) return;
+
+    fetch("https://api.spotify.com/v1/me/player", {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        device_ids: [deviceId],
+        play: false,
+      }),
+    });
+  }, [token, deviceId]);
+
   const api = useCallback(
     async (endpoint: string, method = "PUT", body?: any) => {
       if (!deviceId) return;
