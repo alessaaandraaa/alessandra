@@ -19,15 +19,17 @@ export function useSpotifyPlayer(token: string | null) {
     tokenRef.current = token;
   }, [token]);
 
+  const hasInitialized = useRef(false);
   useEffect(() => {
-    if (!tokenRef.current) return;
+    if (!token) return;
 
-    const script = document.createElement("script");
-    script.src = "https://sdk.scdn.co/spotify-player.js";
-    script.async = true;
-    document.body.appendChild(script);
+    if (hasInitialized.current) return;
 
-    window.onSpotifyWebPlaybackSDKReady = () => {
+    hasInitialized.current = true;
+
+    console.log("Token detected. Initializing Player...");
+
+    const initializePlayer = () => {
       const p = new window.Spotify.Player({
         name: "Alessandra Dashboard",
         getOAuthToken: (cb: any) => cb(tokenRef.current),
@@ -35,8 +37,14 @@ export function useSpotifyPlayer(token: string | null) {
       });
 
       p.addListener("ready", ({ device_id }: any) => {
+        console.log("Device Ready:", device_id);
         setDeviceId(device_id);
         setIsReady(true);
+      });
+
+      p.addListener("not_ready", ({ device_id }: any) => {
+        console.log("Device offline:", device_id);
+        setIsReady(false);
       });
 
       p.addListener("player_state_changed", (state: any) => {
@@ -50,12 +58,24 @@ export function useSpotifyPlayer(token: string | null) {
       p.connect();
       setPlayer(p);
     };
-  }, []);
+
+    if (window.Spotify) {
+      initializePlayer();
+    } else {
+      window.onSpotifyWebPlaybackSDKReady = initializePlayer;
+      if (!document.getElementById("spotify-player-script")) {
+        const script = document.createElement("script");
+        script.id = "spotify-player-script";
+        script.src = "https://sdk.scdn.co/spotify-player.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    }
+  }, [token]);
 
   const api = useCallback(
     async (endpoint: string, method = "PUT", body?: any) => {
       if (!deviceId) return;
-
       const separator = endpoint.includes("?") ? "&" : "?";
       const url = `https://api.spotify.com/v1/me/player/${endpoint}${separator}device_id=${deviceId}`;
 
@@ -87,13 +107,15 @@ export function useSpotifyPlayer(token: string | null) {
     skipPrev: () => player?.previousTrack(),
     startPlaylist: async () => {
       if (!deviceId) return;
-      await api("play?device_id=" + deviceId, "PUT", {
+      await api("play", "PUT", {
         context_uri: MY_PLAYLIST,
+        offset: { position: 0 },
       });
     },
     toggleShuffle: async () => {
-      setShuffleState(!shuffleState);
-      await api(`shuffle?state=${!shuffleState}`);
+      const newState = !shuffleState;
+      setShuffleState(newState);
+      await api(`shuffle?state=${newState}`);
     },
     toggleRepeat: async () => {
       const next =
