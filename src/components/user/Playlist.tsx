@@ -4,7 +4,6 @@ import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
 export default function Playlist() {
   const { token, login } = useSpotifyAuth();
   const {
-    player,
     isReady,
     track,
     isPlaying,
