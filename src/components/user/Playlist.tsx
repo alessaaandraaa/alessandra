@@ -115,6 +115,8 @@ export default function Playlist() {
       }
     };
 
+    refreshAuth();
+
     const fiftyMinutes = 50 * 60 * 1000;
     const interval = setInterval(refreshAuth, fiftyMinutes);
 
