@@ -42,6 +42,7 @@ export default function Playlist() {
 
     if (_token) {
       setToken(_token);
+      console.log("ACCESS TOKEN: ", _token);
       spotify.setAccessToken(_token);
     }
   }, []);
@@ -127,20 +128,48 @@ export default function Playlist() {
   const handleSkipNext = () => player?.nextTrack();
   const handleSkipPrev = () => player?.previousTrack();
 
-  const handleRepeat = () => {
+  const handleRepeat = async () => {
     let nextState: "off" | "context" | "track" = "off";
     if (repeatState === "off") nextState = "context";
     else if (repeatState === "context") nextState = "track";
-    else nextState = "off";
 
     setRepeatState(nextState);
-    spotify.setRepeat(nextState);
+
+    try {
+      await fetch(
+        `https://api.spotify.com/v1/me/player/repeat?state=${nextState}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Repeat changed to:", nextState);
+    } catch (err) {
+      console.error("Repeat failed:", err);
+    }
   };
 
-  const handleShuffle = () => {
+  const handleShuffle = async () => {
     const newShuffle = !shuffleState;
     setShuffleState(newShuffle);
-    spotify.setShuffle(newShuffle).catch((err) => console.error(err));
+    try {
+      await fetch(
+        `https://api.spotify.com/v1/me/player/shuffle?state=${newShuffle}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`, // Uses your working token
+          },
+        }
+      );
+      console.log("Shuffle toggled to:", newShuffle);
+    } catch (err) {
+      console.error("Shuffle failed:", err);
+      // Optional: Revert state if it fails
+      setShuffleState(!newShuffle);
+    }
   };
 
   const playMyPlaylist = () => {
