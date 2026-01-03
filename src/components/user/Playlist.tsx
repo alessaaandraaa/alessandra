@@ -99,7 +99,8 @@ export default function Playlist() {
 
       try {
         const res = await fetch(
-          `https://spotify-backend-eight-pink.vercel.app/refresh_token?={refreshToken}`
+          // ✅ CORRECT
+          `https://spotify-backend-eight-pink.vercel.app/refresh_token?refresh_token=${refreshToken}`
         );
         const data = await res.json();
 
