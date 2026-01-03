@@ -82,7 +82,7 @@ export default function Playlist() {
 const ControlBtn = ({ children, onClick, active }: any) => (
   <button
     onClick={onClick}
-    className={`btn text-center ${active ? "text-green-400" : "text-white"}`}
+    className={`btn text-center ${active ? "text-green-400" : "text-gray-700"}`}
   >
     {children}
   </button>
