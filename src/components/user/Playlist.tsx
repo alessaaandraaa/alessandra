@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 
-const spotify = new SpotifyWebApi();
 const MY_PLAYLIST_URI = "spotify:playlist:3FIX1b3fsmGfCkGJToMiLr";
 
 export default function Playlist() {
-  // State
+  const spotify = useMemo(() => new SpotifyWebApi(), []);
+
+  // ... rest of your code
   const [token, setToken] = useState<string | null>(null);
   const [player, setPlayer] = useState<any>(undefined);
   const [deviceId, setDeviceId] = useState<string>("");
@@ -99,7 +100,6 @@ export default function Playlist() {
 
       try {
         const res = await fetch(
-          // ✅ CORRECT
           `https://spotify-backend-eight-pink.vercel.app/refresh_token?refresh_token=${refreshToken}`
         );
         const data = await res.json();
