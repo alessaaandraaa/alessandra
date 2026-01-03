@@ -1,268 +1,90 @@
-import { useEffect, useState, useMemo } from "react";
-import SpotifyWebApi from "spotify-web-api-js";
-
-const MY_PLAYLIST_URI = "spotify:playlist:3FIX1b3fsmGfCkGJToMiLr";
+import { useSpotifyAuth } from "@/hooks/useSpotifyAuth";
+import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
 
 export default function Playlist() {
-  const spotify = useMemo(() => new SpotifyWebApi(), []);
+  const { token, login } = useSpotifyAuth();
+  const {
+    player,
+    isReady,
+    track,
+    isPlaying,
+    repeatMode,
+    shuffleState,
+    togglePlay,
+    skipNext,
+    skipPrev,
+    toggleShuffle,
+    toggleRepeat,
+    startPlaylist,
+  } = useSpotifyPlayer(token);
 
-  // ... rest of your code
-  const [token, setToken] = useState<string | null>(null);
-  const [player, setPlayer] = useState<any>(undefined);
-  const [deviceId, setDeviceId] = useState<string>("");
-
-  const [track, setTrack] = useState<string>("");
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [repeatState, setRepeatState] = useState<"off" | "context" | "track">(
-    "off"
-  );
-  const [shuffleState, setShuffleState] = useState(false);
-  const [isPlayerReady, setIsPlayerReady] = useState(false);
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    let _token = window.localStorage.getItem("spotify_token");
-
-    if (!token && hash) {
-      const params = new URLSearchParams(hash.substring(1));
-      const urlToken = params.get("access_token");
-      const urlRefreshToken = params.get("refresh_token");
-
-      if (urlToken) {
-        _token = urlToken;
-        window.localStorage.setItem("spotify_token", urlToken);
-
-        if (urlRefreshToken) {
-          window.localStorage.setItem("spotify_refresh_token", urlRefreshToken);
-        }
-
-        window.history.pushState({}, "", "/");
-      }
-    }
-
-    if (_token) {
-      setToken(_token);
-      console.log("ACCESS TOKEN: ", _token);
-      spotify.setAccessToken(_token);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!token) return;
-
-    if (!document.getElementById("spotify-player-script")) {
-      const script = document.createElement("script");
-      script.id = "spotify-player-script";
-      script.src = "https://sdk.scdn.co/spotify-player.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      const newPlayer = new window.Spotify.Player({
-        name: "Alessandra Dashboard",
-        getOAuthToken: (cb: any) => cb(token),
-        volume: 0.5,
-      });
-
-      newPlayer.addListener("ready", ({ device_id }: any) => {
-        console.log("Device Ready:", device_id);
-        setDeviceId(device_id);
-        setIsPlayerReady(true);
-      });
-
-      newPlayer.addListener("authentication_error", ({ message }: any) => {
-        console.error("Authentication failed!", message);
-        window.localStorage.removeItem("spotify_token");
-        setToken(null);
-        window.location.reload();
-      });
-
-      newPlayer.addListener("player_state_changed", (state: any) => {
-        if (!state) return;
-        setTrack(state.track_window.current_track.name);
-        setIsPlaying(!state.paused);
-
-        const repeatModes = ["off", "context", "track"] as const;
-        setRepeatState(repeatModes[state.repeat_mode]);
-
-        setShuffleState(state.shuffle);
-      });
-
-      newPlayer.connect();
-      setPlayer(newPlayer);
-    };
-  }, [token]);
-
-  useEffect(() => {
-    const refreshAuth = async () => {
-      const refreshToken = window.localStorage.getItem("spotify_refresh_token");
-      if (!refreshToken) return;
-
-      try {
-        const res = await fetch(
-          `https://spotify-backend-eight-pink.vercel.app/refresh_token?refresh_token=${refreshToken}`
-        );
-        const data = await res.json();
-
-        if (data.access_token) {
-          console.log("Got new token:", data.access_token);
-          setToken(data.access_token);
-          window.localStorage.setItem("spotify_token", data.access_token);
-          spotify.setAccessToken(data.access_token);
-        }
-      } catch (err) {
-        console.error("Auto-refresh failed", err);
-      }
-    };
-
-    refreshAuth();
-
-    const fiftyMinutes = 50 * 60 * 1000;
-    const interval = setInterval(refreshAuth, fiftyMinutes);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleTogglePlay = () => player?.togglePlay();
-  const handleSkipNext = () => player?.nextTrack();
-  const handleSkipPrev = () => player?.previousTrack();
-
-  const handleRepeat = async () => {
-    let nextState: "off" | "context" | "track" = "off";
-    if (repeatState === "off") nextState = "context";
-    else if (repeatState === "context") nextState = "track";
-
-    setRepeatState(nextState);
-
-    try {
-      await fetch(
-        `https://api.spotify.com/v1/me/player/repeat?state=${nextState}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Repeat changed to:", nextState);
-    } catch (err) {
-      console.error("Repeat failed:", err);
-    }
-  };
-
-  const handleShuffle = async () => {
-    const newShuffle = !shuffleState;
-    setShuffleState(newShuffle);
-    try {
-      await fetch(
-        `https://api.spotify.com/v1/me/player/shuffle?state=${newShuffle}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`, // Uses your working token
-          },
-        }
-      );
-      console.log("Shuffle toggled to:", newShuffle);
-    } catch (err) {
-      console.error("Shuffle failed:", err);
-      // Optional: Revert state if it fails
-      setShuffleState(!newShuffle);
-    }
-  };
-
-  const playMyPlaylist = () => {
-    if (!deviceId) return;
-
-    spotify
-      .transferMyPlayback([deviceId], { play: false })
-      .then(() => new Promise((resolve) => setTimeout(resolve, 500)))
-      .then(() =>
-        spotify.play({ context_uri: MY_PLAYLIST_URI, device_id: deviceId })
-      )
-      .catch((err) => console.error("Playback error:", err));
-  };
-
-  return (
-    <div className="p-10 cursor-pointer group select-none flex items-center justify-center font-mono text-white">
-      {!token ? (
-        <a
-          href={`https://spotify-backend-eight-pink.vercel.app/login${
-            window.location.hostname === "localhost" ? "?env=dev" : "?env=prod"
-          }`}
-          target="_top"
-          className="bg-white text-black px-6 py-3 rounded-full font-bold inline-block no-underline"
+  if (!token) {
+    return (
+      <div className="p-10 flex justify-center items-center">
+        <button
+          onClick={login}
+          className="bg-white text-black px-6 py-3 rounded-full font-bold"
         >
           Login to Spotify
-        </a>
-      ) : (
-        <div>
-          <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md">
-            <p className="p-2 font-bold font-mono text-center text-xs">
-              {track || "Ready to Play"}
-            </p>
-          </div>
+        </button>
+      </div>
+    );
+  }
 
-          <div className="flex gap-3 items-center justify-center rounded-full">
-            {!track ? (
-              <button
-                onClick={playMyPlaylist}
-                disabled={!isPlayerReady}
-                className={`px-6 py-2 rounded-full border border-white text-xs hover:bg-white text-black transition ${
-                  !isPlayerReady && "opacity-50 cursor-wait"
-                }`}
+  return (
+    <div className="p-10 font-mono text-white select-none">
+      <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-center text-xs font-bold">
+        {track || "Ready to Play"}
+      </div>
+
+      <div className="flex gap-3 items-center justify-center">
+        {!track ? (
+          <button
+            onClick={startPlaylist}
+            disabled={!isReady}
+            className={`px-6 py-2 rounded-full border border-white text-xs ${
+              !isReady ? "opacity-50" : "hover:bg-white hover:text-black"
+            }`}
+          >
+            {isReady ? "Start Playlist" : "Loading..."}
+          </button>
+        ) : (
+          <>
+            <ControlBtn onClick={skipPrev}>⏮</ControlBtn>
+            <ControlBtn onClick={togglePlay} active={isPlaying}>
+              {isPlaying ? "❚❚" : "▶"}
+            </ControlBtn>
+            <ControlBtn onClick={skipNext}>⏭</ControlBtn>
+
+            <ControlBtn onClick={toggleRepeat}>
+              {repeatMode === "off" ? (
+                <span className="text-gray-400">×</span>
+              ) : (
+                <span className="text-green-500">
+                  ⟳{repeatMode === "track" && "1"}
+                </span>
+              )}
+            </ControlBtn>
+
+            <ControlBtn onClick={toggleShuffle}>
+              <span
+                className={shuffleState ? "text-green-500" : "text-gray-500"}
               >
-                {isPlayerReady ? "Start Playlist" : "Loading..."}
-              </button>
-            ) : (
-              <div className="flex gap-2 items-center">
-                <button onClick={handleSkipPrev} className="btn text-black">
-                  ⏮
-                </button>
-
-                <button
-                  onClick={handleTogglePlay}
-                  className={`rounded text-black font-bold transition ${
-                    isPlaying ? "bg-green-400" : "bg-white"
-                  }`}
-                >
-                  {isPlaying ? "❚❚" : "▶"}
-                </button>
-
-                <button onClick={handleSkipNext} className="btn text-black">
-                  ⏭
-                </button>
-
-                <button onClick={handleRepeat} className="btn text-center">
-                  {repeatState === "off" && (
-                    <span className="text-gray-400">×</span>
-                  )}
-                  {repeatState === "context" && (
-                    <span className="text-green-500">⟳</span>
-                  )}
-                  {repeatState === "track" && (
-                    <span className="text-green-500 relative">
-                      ⟳
-                      <span className="absolute text-[8px] top-1 right-0 font-bold">
-                        1
-                      </span>
-                    </span>
-                  )}
-                </button>
-
-                <button onClick={handleShuffle} className="btn text-center">
-                  {shuffleState ? (
-                    <span className="text-green-500">↳↰</span>
-                  ) : (
-                    <span className="text-gray-500">↳↰</span>
-                  )}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+                ↳↰
+              </span>
+            </ControlBtn>
+          </>
+        )}
+      </div>
     </div>
   );
 }
+
+const ControlBtn = ({ children, onClick, active }: any) => (
+  <button
+    onClick={onClick}
+    className={`btn text-center ${active ? "text-green-400" : "text-white"}`}
+  >
+    {children}
+  </button>
+);
