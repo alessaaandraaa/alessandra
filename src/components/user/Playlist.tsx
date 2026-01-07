@@ -1,5 +1,6 @@
 import { useSpotifyAuth } from "@/hooks/useSpotifyAuth";
 import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
+import { useSingleTab } from "@/hooks/useSingleTab";
 
 export default function Playlist() {
   const { token, login } = useSpotifyAuth();
@@ -16,6 +17,7 @@ export default function Playlist() {
     toggleRepeat,
     startPlaylist,
   } = useSpotifyPlayer(token);
+  const isBlocked = useSingleTab();
 
   if (!token) {
     return (
@@ -26,6 +28,16 @@ export default function Playlist() {
         >
           Login to Spotify
         </button>
+      </div>
+    );
+  }
+
+  if (isBlocked) {
+    return (
+      <div className="p-10 font-mono text-gray-500 select-none">
+        <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-white text-center text-xs font-bold">
+          Currently playing in another tab
+        </div>
       </div>
     );
   }

@@ -4,11 +4,9 @@ export function useSpotifyAuth() {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // 1. Initial Load
     const stored = window.localStorage.getItem("spotify_token");
     if (stored) setToken(stored);
 
-    // 2. Listen for Popup Success
     const handleMessage = (e: MessageEvent) => {
       if (e.data?.type === "SPOTIFY_LOGIN_SUCCESS") {
         console.log("Popup login success!", e.data);
