@@ -73,6 +73,7 @@ export function useSpotifyPlayer(token: string | null, enable: boolean = true) {
   }, [token, enable]);
 
   useEffect(() => {
+    if (!enable) return;
     if (!player || !deviceId || !token) return;
 
     player.activateElement();
@@ -88,7 +89,20 @@ export function useSpotifyPlayer(token: string | null, enable: boolean = true) {
         play: false,
       }),
     });
-  }, [token, player, deviceId]);
+  }, [enable, token, player, deviceId]);
+
+  useEffect(() => {
+    if (!player) return;
+
+    if (!enable) {
+      console.log("Tab disabled — disconnecting Spotify player");
+      player.disconnect();
+      setPlayer(undefined);
+      setDeviceId("");
+      setIsReady(false);
+      hasInitialized.current = false;
+    }
+  }, [enable, player]);
 
   const api = useCallback(
     async (endpoint: string, method = "PUT", body?: any) => {

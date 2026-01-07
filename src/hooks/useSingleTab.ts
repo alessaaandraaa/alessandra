@@ -1,38 +1,40 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const CHANNEL = "alessandra_dashboard_sync";
 
 export function useSingleTab() {
   const [isBlocked, setIsBlocked] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
+  const channelRef = useRef<BroadcastChannel | null>(null);
+  const isLeaderRef = useRef(false);
 
   useEffect(() => {
-    const channel = new BroadcastChannel("alessandra_dashboard_sync");
+    const channel = new BroadcastChannel(CHANNEL);
+    channelRef.current = channel;
 
-    channel.postMessage({ type: "NEW_TAB" });
+    channel.postMessage({ type: "WHO_IS_LEADER" });
 
-    const timer = setTimeout(() => {
-      setIsChecking(false);
-    }, 200);
+    const leaderTimeout = setTimeout(() => {
+      isLeaderRef.current = true;
+      setIsBlocked(false);
+      channel.postMessage({ type: "LEADER" });
+    }, 300);
 
     channel.onmessage = (event) => {
-      if (event.data.type === "ACTIVE") {
-        console.log("Another tab is active. Blocking this one.");
+      if (event.data.type === "LEADER") {
+        clearTimeout(leaderTimeout);
         setIsBlocked(true);
-        setIsChecking(false);
-        clearTimeout(timer);
       }
 
-      if (event.data.type === "NEW_TAB") {
-        if (!isBlocked && !isChecking) {
-          channel.postMessage({ type: "ACTIVE" });
-        }
+      if (event.data.type === "WHO_IS_LEADER" && isLeaderRef.current) {
+        channel.postMessage({ type: "LEADER" });
       }
     };
 
     return () => {
+      clearTimeout(leaderTimeout);
       channel.close();
-      clearTimeout(timer);
     };
-  }, [isBlocked, isChecking]);
+  }, []);
 
-  return { isBlocked, isChecking };
+  return { isBlocked };
 }

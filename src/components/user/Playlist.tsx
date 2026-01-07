@@ -4,8 +4,8 @@ import { useSingleTab } from "@/hooks/useSingleTab";
 
 export default function Playlist() {
   const { token, login } = useSpotifyAuth();
-  const { isBlocked, isChecking } = useSingleTab();
-  const shouldEnablePlayer = !isBlocked && !isChecking;
+  const { isBlocked } = useSingleTab();
+  const shouldEnablePlayer = !isBlocked;
 
   const {
     isReady,
