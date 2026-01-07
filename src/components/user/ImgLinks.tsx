@@ -69,7 +69,11 @@ export default function ImgLinks() {
           link="https://www.youtube.com/"
           name="YouTube"
         ></Img>
-        <Img imgLink={mueh} link="https://www.figma.com/" name="Figma"></Img>
+        <Img
+          imgLink={mueh}
+          link="https://ismis.usc.edu.ph/Account/Login?ReturnUrl=%2F"
+          name="ISMIS"
+        ></Img>
       </div>
     </>
   );
