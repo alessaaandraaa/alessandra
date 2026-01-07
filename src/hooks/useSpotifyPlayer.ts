@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 const MY_PLAYLIST = "spotify:playlist:3FIX1b3fsmGfCkGJToMiLr";
 
-export function useSpotifyPlayer(token: string | null) {
+export function useSpotifyPlayer(token: string | null, enable: boolean = true) {
   const [player, setPlayer] = useState<any>(undefined);
   const [deviceId, setDeviceId] = useState("");
   const [track, setTrack] = useState("");
@@ -12,7 +12,6 @@ export function useSpotifyPlayer(token: string | null) {
     "off"
   );
   const [isReady, setIsReady] = useState(false);
-
   const tokenRef = useRef(token);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export function useSpotifyPlayer(token: string | null) {
 
   const hasInitialized = useRef(false);
   useEffect(() => {
-    if (!token) return;
+    if (!token || !enable || hasInitialized.current) return;
 
     if (hasInitialized.current) return;
 
@@ -71,7 +70,7 @@ export function useSpotifyPlayer(token: string | null) {
         document.body.appendChild(script);
       }
     }
-  }, [token]);
+  }, [token, enable]);
 
   useEffect(() => {
     if (!player || !deviceId || !token) return;

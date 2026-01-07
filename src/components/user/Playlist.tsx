@@ -4,6 +4,9 @@ import { useSingleTab } from "@/hooks/useSingleTab";
 
 export default function Playlist() {
   const { token, login } = useSpotifyAuth();
+  const { isBlocked, isChecking } = useSingleTab();
+  const shouldEnablePlayer = !isBlocked && !isChecking;
+
   const {
     isReady,
     track,
@@ -16,8 +19,7 @@ export default function Playlist() {
     toggleShuffle,
     toggleRepeat,
     startPlaylist,
-  } = useSpotifyPlayer(token);
-  const isBlocked = useSingleTab();
+  } = useSpotifyPlayer(token, shouldEnablePlayer);
 
   if (!token) {
     return (
