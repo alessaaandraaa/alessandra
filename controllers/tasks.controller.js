@@ -1,5 +1,7 @@
+import { Mongoose } from "mongoose";
 import { Task } from "../models/task.model.js";
 import { BasicTask } from "../models/todo.model.js";
+import mongoose from "mongoose";
 
 const taskTypes = {
   basic: BasicTask,
