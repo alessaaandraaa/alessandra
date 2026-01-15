@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
 
-export interface TaskBase extends mongoose.Document {
-  type: "school" | "subscription" | "basic";
-  name: string;
-  status: "ongoing" | "done";
-  priority: "high" | "moderate" | "low" | "backlog";
-  dueDate: Date;
-}
-
-const TaskSchema = new mongoose.Schema<TaskBase>(
+const TaskSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -41,4 +33,4 @@ const TaskSchema = new mongoose.Schema<TaskBase>(
   }
 );
 
-export const Task = mongoose.model<TaskBase>("Task", TaskSchema);
+export const Task = mongoose.model("Task", TaskSchema);

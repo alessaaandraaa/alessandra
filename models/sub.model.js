@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Task } from "./task.model.ts";
+import { Task } from "./task.model.js";
 
 const SubscriptionTaskSchema = new mongoose.Schema({
   frequency: {

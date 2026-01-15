@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Task } from "./task.model.ts";
+import { Task } from "./task.model.js";
 
 const BasicTaskSchema = new mongoose.Schema({
   notes: {

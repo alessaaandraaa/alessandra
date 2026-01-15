@@ -1,4 +1,4 @@
-import { Task } from "../models/task.model.ts";
+import { Task } from "../models/task.model.js";
 import { BasicTask } from "../models/todo.model.js";
 
 const taskTypes = {
