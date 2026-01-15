@@ -12,6 +12,7 @@ import nobu from "@/assets/s.png";
 import yuhh from "@/assets/g.png";
 import mueh from "@/assets/m.png";
 import fei from "@/assets/f.png";
+import pv from "@/assets/pv.png";
 
 export default function ImgLinks() {
   return (
@@ -60,17 +61,13 @@ export default function ImgLinks() {
           name="Google Drive"
         ></Img>
         <Img
-          imgLink={nobu}
+          imgLink={yuhh}
           link="https://github.com/alessaaandraaa"
           name="GitHub"
         ></Img>
+        <Img imgLink={pv} link="https://www.youtube.com/" name="YouTube"></Img>
         <Img
-          imgLink={yuhh}
-          link="https://www.youtube.com/"
-          name="YouTube"
-        ></Img>
-        <Img
-          imgLink={mueh}
+          imgLink={nobu}
           link="https://ismis.usc.edu.ph/Account/Login?ReturnUrl=%2F"
           name="ISMIS"
         ></Img>
