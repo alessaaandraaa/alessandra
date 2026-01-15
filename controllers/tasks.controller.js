@@ -5,9 +5,15 @@ const taskTypes = {
   basic: BasicTask,
 };
 
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  return mongoose.connect(process.env.DATABASE_URL);
+};
+
 class TasksController {
   async getTasks(req, res) {
     try {
+      await connectDB();
       const tasks = await Task.find({});
       res.status(200).json(tasks);
     } catch (e) {
@@ -17,6 +23,7 @@ class TasksController {
 
   async getTask(req, res) {
     try {
+      await connectDB();
       const { id } = req.params;
       const newTask = await Task.findById(id);
       res.status(200).json(newTask);
@@ -27,6 +34,7 @@ class TasksController {
 
   async addTask(req, res) {
     try {
+      await connectDB();
       const { type } = req.body;
 
       const taskType = taskTypes[type];
@@ -45,6 +53,7 @@ class TasksController {
 
   async editTask(req, res) {
     try {
+      await connectDB();
       const { id } = req.params;
 
       const existingTask = await Task.findById(id);
@@ -73,6 +82,7 @@ class TasksController {
 
   async deleteTask(req, res) {
     try {
+      await connectDB();
       const { id } = req.params;
       const deletedTask = await Task.findByIdAndDelete(id);
 
