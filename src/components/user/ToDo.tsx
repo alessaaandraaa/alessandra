@@ -1,4 +1,3 @@
-import Tasks from "./Tasks";
 import TaskButtonList from "./TaskButtons";
 import TaskList from "./TaskList";
 export default function ToDo() {

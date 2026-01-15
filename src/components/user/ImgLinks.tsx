@@ -10,7 +10,7 @@ import paz from "@/assets/p.png";
 import swan from "@/assets/bs.png";
 import nobu from "@/assets/s.png";
 import yuhh from "@/assets/g.png";
-import mueh from "@/assets/m.png";
+//import mueh from "@/assets/m.png";
 import fei from "@/assets/f.png";
 import pv from "@/assets/pv.png";
 
