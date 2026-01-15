@@ -75,13 +75,16 @@ export default function AddTaskForm() {
 
     console.log("BODY: ", body);
 
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+    const response = await fetch(
+      "https://spotify-backend-eight-pink.vercel.app/api/tasks",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
 
     const res = await response.json();
     console.log("Response: ", res);

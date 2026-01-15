@@ -10,7 +10,9 @@ export default function TaskList() {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const res = await axios.get("/api/tasks");
+      const res = await axios.get(
+        "https://spotify-backend-eight-pink.vercel.app/api/tasks"
+      );
       console.log(res.data);
 
       setTasks(res.data);
