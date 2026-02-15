@@ -16,8 +16,8 @@ import pv from "@/assets/pv.png";
 
 export default function ImgLinks() {
   return (
-    <>
-      <div className="grid grid-cols-7 gap-0.5 p-2 rounded-2xl bg-zinc-700/50">
+    <div className="items-center relative group">
+      <div className="grid grid-cols-7 gap-0.5 p-2 rounded-2xl z-10 bg-zinc-700/50">
         <Img
           imgLink={rehtio}
           link="https://usc.instructure.com/login/canvas"
@@ -71,7 +71,33 @@ export default function ImgLinks() {
           link="https://ismis.usc.edu.ph/Account/Login?ReturnUrl=%2F"
           name="ISMIS"
         ></Img>
+        <div className="p-5 flex gap-3 z-20 items-center align-middle justify-center">
+          <button
+            style={{
+              fontSize: "8px",
+              backgroundColor: "rgba(255, 255, 255)",
+              padding: "1px",
+              height: "20px",
+              width: "20px",
+              borderRadius: "50%",
+            }}
+          >
+            +
+          </button>
+          <button
+            style={{
+              fontSize: "8px",
+              backgroundColor: "rgba(255, 255, 255)",
+              padding: "1px",
+              height: "20px",
+              width: "20px",
+              borderRadius: "50%",
+            }}
+          >
+            ✎
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

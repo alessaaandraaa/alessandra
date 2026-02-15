@@ -1,14 +1,16 @@
 import type { BasicTask } from "@/lib/types";
-
+import { formatReadableDate } from "@/lib/utils";
 type TaskProps = {
   task: BasicTask;
 };
 
 export default function BaseTask({ task }: TaskProps) {
   return (
-    <div className="text-white mb-3 bg-red-500/50 rounded-md p-2 shadow-2xl text-left">
+    <div className="text-white mb-3 bg-red-500/50 rounded-md p-2 shadow-2xl text-left min-w-60">
       <p className="font-bold text-[10px]">{task.name}</p>
-      <p className="font-thin text-[8px]">{String(task.dueDate)}</p>
+      <p className="font-thin text-[8px]">
+        {formatReadableDate(String(task.dueDate))}
+      </p>
     </div>
   );
 }

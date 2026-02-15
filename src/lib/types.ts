@@ -9,6 +9,15 @@ export interface BaseTask {
   updatedAt: string;
 }
 
+export interface CanvasTask {
+  id: number;
+  name: string;
+  url: string;
+  description: string;
+  due: string;
+  course_name: string;
+}
+
 export interface BasicTask extends BaseTask {
   notes: string;
 }
