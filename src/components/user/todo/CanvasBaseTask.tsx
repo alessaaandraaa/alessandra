@@ -1,10 +1,10 @@
 import type { CanvasTask } from "@/lib/types";
-import {
+/*import {
   Dialog,
   DialogContent,
   DialogTrigger,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog";*/
 import { formatReadableDate } from "@/lib/utils";
 
 type TaskProps = {

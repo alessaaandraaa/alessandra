@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { CanvasTask } from "@/lib/types";
 import CanvasBaseTask from "./CanvasBaseTask";
 import axios from "axios";
 import TaskSkeleton from "./TaskSkeleton";
