@@ -5,6 +5,7 @@ import type { BasicTask } from "@/lib/types";
 import BaseTask from "./DoableBaseTask";
 import axios from "axios";
 import TaskSkeleton from "./TaskSkeleton";
+import TaskButtonList from "./TaskButtonsBase";
 
 export default function DoableTasks() {
   const [tasks, setTasks] = useState<BasicTask[]>([]);
@@ -26,14 +27,28 @@ export default function DoableTasks() {
   }, []);
 
   return (
-    <div className="flex-1 w-full flex flex-col bg-white/5 rounded-2xl p-2">
-      {loading ? (
-        <div className="flex flex-1 w-full items-center align-middle justify-center">
-          <TaskSkeleton />
-        </div>
-      ) : (
-        tasks.map((t) => <BaseTask task={t} />)
-      )}
-    </div>
+    /*<div className="flex-1 w-full flex flex-col bg-white/5 rounded-2xl p-2">
+          {loading ? (
+            <div className="flex flex-1 w-full items-center align-middle justify-center">
+              <TaskSkeleton />
+            </div>
+          ) : tasks.length === 0 ? (
+            <p className="text-white">No tasks!</p>
+          ) : (
+            tasks.map((t) => <CanvasBaseTask task={t} />)
+          )}
+        </div> */
+    <>
+      <div className="flex-1 w-full flex flex-col bg-white/5 rounded-2xl p-2">
+        {loading ? (
+          <div className="flex flex-1 w-full items-center align-middle justify-center">
+            <TaskSkeleton />
+          </div>
+        ) : (
+          tasks.map((t) => <BaseTask task={t} />)
+        )}
+      </div>
+      <TaskButtonList />
+    </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import DoableTasks from "./BaseTasks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CanvasTasks from "./CanvasTasks";
+import CanvasMain from "./canvas/CanvasMain";
 export default function TaskList() {
   return (
     <div className="px-4 rounded-2xl min-w-2xs flex-1 shadow-2xl flex flex-col h-full w-full">
@@ -12,7 +12,7 @@ export default function TaskList() {
           <TabsTrigger value="doable">Doable</TabsTrigger>
         </TabsList>
         <TabsContent value="canvas" className="flex-1 flex flex-col">
-          <CanvasTasks />
+          <CanvasMain />
         </TabsContent>
         <TabsContent value="doable" className="flex-1 flex flex-col">
           <DoableTasks />

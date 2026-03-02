@@ -6,8 +6,7 @@ function App() {
   return (
     <div className="flex gap-5 cursor-pointer group select-none">
       <ToDo />
-      <div className="bg-black/25 p-5 rounded-2xl">
-        {" "}
+      <div className="bg-black/25 p-5 rounded-2xl min-w-2xl max-w-2xl">
         <ImgLinks />
         <Playlist />
       </div>
