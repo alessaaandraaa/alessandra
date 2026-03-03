@@ -1,16 +1,7 @@
 import { useSpotifyAuth } from "@/hooks/useSpotifyAuth";
 import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
 import { useSingleTab } from "@/hooks/useSingleTab";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import PlaylistsDialog from "./PlaylistsDialog";
 
 export default function Playlist() {
@@ -103,7 +94,7 @@ export default function Playlist() {
                 {/* Now the button is the direct child of the flex container! */}
                 <ControlBtn>View Playlists</ControlBtn>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-106.25">
                 <PlaylistsDialog />
               </DialogContent>
             </Dialog>

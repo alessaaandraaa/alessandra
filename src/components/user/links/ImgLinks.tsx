@@ -74,7 +74,6 @@ export default function ImgLinks() {
           name="ISMIS"
         ></Img>
       </div>
-      <LinksButtons />
     </div>
   );
 }
