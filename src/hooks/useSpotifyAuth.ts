@@ -14,7 +14,7 @@ export function useSpotifyAuth() {
         window.localStorage.setItem("spotify_token", e.data.access_token);
         window.localStorage.setItem(
           "spotify_refresh_token",
-          e.data.refresh_token
+          e.data.refresh_token,
         );
       }
     };
@@ -22,7 +22,7 @@ export function useSpotifyAuth() {
 
     const refresh = async () => {
       const refresh_token = window.localStorage.getItem(
-        "spotify_refresh_token"
+        "spotify_refresh_token",
       );
 
       if (!refresh_token || refresh_token === "undefined") {
@@ -32,7 +32,7 @@ export function useSpotifyAuth() {
       try {
         console.log("Attempting to refresh token...");
         const res = await fetch(
-          `https://spotify-backend-eight-pink.vercel.app/api/spotify/refresh_token?refresh_token=${refresh_token}`
+          `https://spotify-backend-eight-pink.vercel.app/api/spotify/refresh_token?refresh_token=${refresh_token}`,
         );
 
         if (!res.ok) {
@@ -52,7 +52,7 @@ export function useSpotifyAuth() {
             console.log("Saving rotated refresh token...");
             window.localStorage.setItem(
               "spotify_refresh_token",
-              data.refresh_token
+              data.refresh_token,
             );
           }
         } else {
@@ -65,7 +65,7 @@ export function useSpotifyAuth() {
     };
 
     refresh();
-    const interval = setInterval(refresh, 50 * 60 * 1000);
+    const interval = setInterval(refresh, 50 * 60 * 990);
 
     return () => {
       window.removeEventListener("message", handleMessage);
@@ -85,7 +85,7 @@ export function useSpotifyAuth() {
     window.open(
       url,
       "_blank",
-      `width=${width},height=${height},top=${top},left=${left},toolbar=no,menubar=no,location=no,status=no`
+      `width=${width},height=${height},top=${top},left=${left},toolbar=no,menubar=no,location=no,status=no`,
     );
   };
 

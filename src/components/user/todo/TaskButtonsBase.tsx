@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dialog";
 import AddTaskForm from "./AddTaskForm";
 
-export default function TaskButtonList() {
+export default function TaskButtonListBase() {
   return (
     <div className="rounded-xl m-2 flex gap-2 justify-center items-center">
       <Dialog>

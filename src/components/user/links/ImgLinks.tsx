@@ -13,7 +13,6 @@ import yuhh from "@/assets/g.png";
 //import mueh from "@/assets/m.png";
 import fei from "@/assets/f.png";
 import pv from "@/assets/pv.png";
-
 export default function ImgLinks() {
   return (
     <div className="items-center relative group">
@@ -71,32 +70,6 @@ export default function ImgLinks() {
           link="https://ismis.usc.edu.ph/Account/Login?ReturnUrl=%2F"
           name="ISMIS"
         ></Img>
-        <div className="p-5 flex gap-3 z-20 items-center align-middle justify-center">
-          <button
-            style={{
-              fontSize: "8px",
-              backgroundColor: "rgba(255, 255, 255)",
-              padding: "1px",
-              height: "20px",
-              width: "20px",
-              borderRadius: "50%",
-            }}
-          >
-            +
-          </button>
-          <button
-            style={{
-              fontSize: "8px",
-              backgroundColor: "rgba(255, 255, 255)",
-              padding: "1px",
-              height: "20px",
-              width: "20px",
-              borderRadius: "50%",
-            }}
-          >
-            ✎
-          </button>
-        </div>
       </div>
     </div>
   );

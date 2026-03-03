@@ -1,6 +1,8 @@
 import { useSpotifyAuth } from "@/hooks/useSpotifyAuth";
 import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
 import { useSingleTab } from "@/hooks/useSingleTab";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import PlaylistsDialog from "./PlaylistsDialog";
 
 export default function Playlist() {
   const { token, login } = useSpotifyAuth();
@@ -23,7 +25,7 @@ export default function Playlist() {
 
   if (!token) {
     return (
-      <div className="p-10 flex justify-center items-center">
+      <div className="p-4 flex justify-center items-center">
         <button
           onClick={login}
           className="bg-white text-black px-6 py-3 rounded-full font-bold"
@@ -36,7 +38,7 @@ export default function Playlist() {
 
   if (isBlocked) {
     return (
-      <div className="p-10 font-mono text-gray-500 select-none">
+      <div className="p-4 font-mono text-gray-500 select-none">
         <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-white text-center text-xs font-bold">
           Currently playing in another tab
         </div>
@@ -45,7 +47,7 @@ export default function Playlist() {
   }
 
   return (
-    <div className="p-10 font-mono text-gray-500 select-none">
+    <div className="p-4 font-mono text-gray-500 select-none">
       <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-white text-center text-xs font-bold">
         {track || "Ready to Play"}
       </div>
@@ -86,6 +88,16 @@ export default function Playlist() {
                 ↳↰
               </span>
             </ControlBtn>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                {/* Now the button is the direct child of the flex container! */}
+                <ControlBtn>View Playlists</ControlBtn>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-106.25">
+                <PlaylistsDialog />
+              </DialogContent>
+            </Dialog>
           </>
         )}
       </div>
@@ -97,6 +109,7 @@ const ControlBtn = ({ children, onClick, active }: any) => (
   <button
     onClick={onClick}
     className={`btn text-center ${active ? "text-green-400" : "text-gray-700"}`}
+    style={{ padding: "5px 10px", fontSize: "15px" }}
   >
     {children}
   </button>
