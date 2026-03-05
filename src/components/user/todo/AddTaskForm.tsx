@@ -83,7 +83,7 @@ export default function AddTaskForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-      }
+      },
     );
 
     const res = await response.json();
