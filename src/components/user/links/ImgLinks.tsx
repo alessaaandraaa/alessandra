@@ -10,10 +10,9 @@ import paz from "@/assets/p.png";
 import swan from "@/assets/bs.png";
 import nobu from "@/assets/s.png";
 import yuhh from "@/assets/g.png";
+//import mueh from "@/assets/m.png";
 import fei from "@/assets/f.png";
 import pv from "@/assets/pv.png";
-import mueh from "@/assets/m.png";
-
 export default function ImgLinks() {
   return (
     <div className="items-center relative group">
@@ -70,11 +69,6 @@ export default function ImgLinks() {
           imgLink={nobu}
           link="https://ismis.usc.edu.ph/Account/Login?ReturnUrl=%2F"
           name="ISMIS"
-        ></Img>
-        <Img
-          imgLink={mueh}
-          link="https://mail.google.com/mail/u/3/#chat/home"
-          name="Google Chat"
         ></Img>
       </div>
     </div>
