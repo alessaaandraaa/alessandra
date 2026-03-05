@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ImgLinks from "./ImgLinks";
+import ImgLinksProjects from "./ImgLinksProjects";
 import LinksButtons from "./TaskButtonsBase";
 export default function ImgLinksMain() {
   return (
@@ -12,7 +13,9 @@ export default function ImgLinksMain() {
         <TabsContent value="main">
           <ImgLinks />
         </TabsContent>
-        <TabsContent value="projects">Change your password here.</TabsContent>
+        <TabsContent value="projects">
+          <ImgLinksProjects />
+        </TabsContent>
       </Tabs>
       <LinksButtons />
     </>
