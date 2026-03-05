@@ -32,7 +32,7 @@ export function useSpotifyAuth() {
       try {
         console.log("Attempting to refresh token...");
         const res = await fetch(
-          `https://www.aless-backend.ninzz.dev/api/spotify/refresh_token?refresh_token=${refresh_token}`,
+          `https://spotify-backend-eight-pink.vercel.app/api/spotify/refresh_token?refresh_token=${refresh_token}`,
         );
 
         if (!res.ok) {
@@ -80,7 +80,7 @@ export function useSpotifyAuth() {
     const top = window.screen.height / 2 - height / 2;
 
     const env = window.location.hostname === "localhost" ? "dev" : "prod";
-    const url = `https://-eight-pink.vercel.app/api/spotify/login?env=${env}`;
+    const url = `https://spotify-backend-eight-pink.vercel.app/api/spotify/login?env=${env}`;
 
     window.open(
       url,
