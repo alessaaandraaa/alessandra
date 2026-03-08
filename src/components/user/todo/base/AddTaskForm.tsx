@@ -48,20 +48,24 @@ const priorities = [
   },
 ];
 
+type props = {
+  onAddTasks: (data: any) => void;
+};
+
 const formSchema = z.object({
   name: z.string().min(1, "Please add a name."),
   notes: z.string(),
   priority: z.string().min(1, "Please choose a priority."),
-  dueDate: z.iso.date(),
+  dueDate: z.string().min(1, "Please select a date"), // Changed from z.iso.date() to string
 });
 
-export default function AddTaskForm() {
+export default function AddTaskForm({ onAddTasks }: props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "To-Do Task 1",
       notes: "",
-      priority: "medium",
+      priority: "moderate",
       dueDate: "",
     },
   });
@@ -75,19 +79,8 @@ export default function AddTaskForm() {
 
     console.log("BODY: ", body);
 
-    const response = await fetch(
-      "https://spotify-backend-eight-pink.vercel.app/api/tasks",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      },
-    );
-
-    const res = await response.json();
-    console.log("Response: ", res);
+    onAddTasks(body);
+    form.reset();
   }
 
   return (
@@ -208,18 +201,20 @@ export default function AddTaskForm() {
               )}
             />
           </FieldGroup>
+          <Field orientation="horizontal">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => form.reset()}
+            >
+              Reset
+            </Button>
+            <Button type="submit" className="text-black">
+              Submit
+            </Button>
+          </Field>
         </form>
       </CardContent>
-      <CardFooter>
-        <Field orientation="horizontal">
-          <Button type="button" variant="outline" onClick={() => form.reset()}>
-            Reset
-          </Button>
-          <Button type="submit" form="form-add-task" className="text-black">
-            Submit
-          </Button>
-        </Field>
-      </CardFooter>
     </Card>
   );
 }

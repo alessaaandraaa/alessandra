@@ -1,34 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CanvasTasks from "./CanvasTasks";
-import axios from "axios";
 import CanvasPagination from "./CanvasPagination";
+import { getCanvasQuery } from "@/queries/canvas.queries";
 
 export default function CanvasMain() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { data, isLoading } = getCanvasQuery();
+
   const [page, setPage] = useState(1);
   const [tasksPerPage] = useState(4);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      setLoading(true);
-      const res = await axios.get(
-        "https://spotify-backend-eight-pink.vercel.app/api/canvas",
-      );
-      console.log(res.data);
-
-      setTasks(res.data);
-      setLoading(false);
-    };
-
-    fetchTasks();
-  }, []);
-
   const indexOfLastTask = page * tasksPerPage;
   const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-  const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
+  const currentTasks = (data || []).slice(indexOfFirstTask, indexOfLastTask);
+  const length = (data || []).length;
 
   const paginate = (pageNumber: number) => setPage(pageNumber);
 
@@ -36,11 +22,11 @@ export default function CanvasMain() {
     <>
       {" "}
       <div className="flex-1 w-full flex flex-col bg-white/5 rounded-2xl p-2 h-11/12">
-        <CanvasTasks loading={loading} tasks={currentTasks} />
+        <CanvasTasks loading={isLoading} tasks={currentTasks} />
       </div>
       <CanvasPagination
         tasksPerPage={tasksPerPage}
-        totalPosts={tasks.length}
+        totalPosts={length}
         currentPage={page}
         paginate={paginate}
       />

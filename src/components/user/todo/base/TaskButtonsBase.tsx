@@ -6,7 +6,11 @@ import {
 } from "@/components/ui/dialog";
 import AddTaskForm from "./AddTaskForm";
 
-export default function TaskButtonListBase() {
+type props = {
+  onAddTasks: (data: any) => void;
+};
+
+export default function TaskButtonListBase({ onAddTasks }: props) {
   return (
     <div className="rounded-xl m-2 flex gap-2 justify-center items-center">
       <Dialog>
@@ -25,12 +29,9 @@ export default function TaskButtonListBase() {
             -
           </button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          {/* 2. Moved the form INSIDE the content */}
-          <form>
-            <DialogTitle>Hello</DialogTitle>
-            <p>hi</p>
-          </form>
+        <DialogContent className="sm:max-w-106.25">
+          <DialogTitle>Hello</DialogTitle>
+          <p>hi</p>
         </DialogContent>
       </Dialog>
 
@@ -77,12 +78,9 @@ export default function TaskButtonListBase() {
             +
           </button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          {/* Form moved here to wrap your AddTaskForm if it needs one */}
-          <form>
-            <DialogTitle>Add Task</DialogTitle>
-            <AddTaskForm />
-          </form>
+        <DialogContent className="sm:max-w-106.25">
+          <DialogTitle>Add Task</DialogTitle>
+          <AddTaskForm onAddTasks={onAddTasks} />
         </DialogContent>
       </Dialog>
     </div>
