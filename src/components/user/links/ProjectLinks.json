@@ -1,0 +1,37 @@
+[
+    { 
+        "name": "Codebility", 
+        "link": "https://www.codebility.tech/home/kanban/b887bc11-3ec3-431c-8401-42bcc07b0257/54c16661-15e8-4623-b6fb-b175216384d6", 
+        "image": "/assets/the.png" 
+    },
+    { 
+        "name": "TC Website Figma", 
+        "link": "https://www.canva.com/", 
+        "image": "/assets/sx.png" 
+    },
+    {
+        "name": "TC Website System Doc", 
+        "link": "https://www.canva.com/", 
+        "image": "/assets/yg.png" 
+    },
+    {
+        "name": "TC Website Features", 
+        "link": "https://music.youtube.com/", 
+        "image": "/assets/pl.png" 
+    },
+    {
+        "name": "TC Website Notion", 
+        "link": "https://gemini.google.com/u/1/app?pageId=none", 
+        "image": "/assets/ev.png" 
+    },
+    {
+        "name": "TC Website PPT", 
+        "link": "https://mail.google.com/mail/u/3/#inbox", 
+        "image": "/assets/bh.png" 
+    },
+    {
+        "name": "PhilNITS Mock Exam", 
+        "link": "https://chatgpt.com/", 
+        "image": "/assets/ph.png" 
+    }
+]

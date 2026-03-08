@@ -1,5 +1,5 @@
 "use client";
-import DoableTasks from "./BaseTasks";
+import DoableTasks from "./base/BaseTasks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CanvasMain from "./canvas/CanvasMain";
 export default function TaskList() {
