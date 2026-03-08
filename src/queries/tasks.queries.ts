@@ -31,7 +31,7 @@ export const useAddTasksQuery = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
-    onError: (err, g, context: any) => {
+    onError: (_error, _variables, context: any) => {
       if (context?.prevTasks) {
         queryClient.setQueryData(["tasks"], context.prevTasks);
       }
