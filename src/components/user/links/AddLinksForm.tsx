@@ -184,7 +184,7 @@ export default function AddLinksForm({ onAddLinks }: props) {
             <Controller
               name="categories"
               control={form.control}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <FieldSet className="pt-1">
                   <FieldLegend className="text-[11px] uppercase tracking-wider text-zinc-500 mb-2">
                     Categories
