@@ -3,11 +3,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ImgLinks from "./ImgLinks";
 import LinksPagination from "./LinksPagination";
 import { getLinksQuery } from "@/queries/links.queries";
+import { useAddLinksQuery } from "@/queries/links.queries";
 
 export default function ImgLinksMain() {
   const { data, isLoading } = getLinksQuery();
-  const safeData = data || [];
 
+  const add = useAddLinksQuery();
+
+  const addLink = (data: any) => {
+    add.mutate(data);
+  };
+
+  const safeData = data || [];
   const mainLinks = safeData.filter((d: any) => d.categories?.includes("Main"));
 
   const projectLinks = safeData.filter((d: any) =>
@@ -65,6 +72,7 @@ export default function ImgLinksMain() {
         totalPosts={currentDataset.length} // Dynamically passes the length
         currentPage={page}
         paginate={paginate}
+        onAddLinks={addLink}
       />
     </>
   );
