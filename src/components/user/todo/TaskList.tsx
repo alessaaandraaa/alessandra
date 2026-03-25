@@ -8,8 +8,8 @@ export default function TaskList() {
       <p className="text-white font-bold text-2xl m-3">TO-DO</p>
       <Tabs defaultValue="canvas" className="flex-1 flex flex-col w-full">
         <TabsList className="w-full">
-          <TabsTrigger value="canvas">Canvas</TabsTrigger>
-          <TabsTrigger value="doable">Doable</TabsTrigger>
+          <TabsTrigger value="canvas" style={{backgroundColor: "rgba(255, 255, 255)"}}>Canvas</TabsTrigger>
+          <TabsTrigger value="doable" style={{backgroundColor: "rgba(255, 255, 255)"}}>Doable</TabsTrigger>
         </TabsList>
         <TabsContent value="canvas" className="flex-1 flex flex-col">
           <CanvasMain />

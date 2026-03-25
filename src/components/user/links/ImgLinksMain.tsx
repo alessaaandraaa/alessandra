@@ -54,8 +54,8 @@ export default function ImgLinksMain() {
         onValueChange={handleTabChange} // Update active tab state
       >
         <TabsList>
-          <TabsTrigger value="main">Main</TabsTrigger>
-          <TabsTrigger value="projects">Projects</TabsTrigger>
+          <TabsTrigger value="main" style={{backgroundColor: "rgba(255, 255, 255)"}}>Main</TabsTrigger>
+          <TabsTrigger value="projects" style={{backgroundColor: "rgba(255, 255, 255)"}}>Projects</TabsTrigger>
         </TabsList>
 
         <TabsContent value="main">

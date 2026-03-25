@@ -16,6 +16,8 @@ export default function CanvasMain() {
   const currentTasks = (data || []).slice(indexOfFirstTask, indexOfLastTask);
   const length = (data || []).length;
 
+  const noOfPages = Math.ceil(length / tasksPerPage);
+
   const paginate = (pageNumber: number) => setPage(pageNumber);
 
   return (
@@ -29,6 +31,7 @@ export default function CanvasMain() {
         totalPosts={length}
         currentPage={page}
         paginate={paginate}
+        noOfPages={noOfPages}
       />
     </>
   );

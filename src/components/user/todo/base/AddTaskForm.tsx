@@ -209,7 +209,7 @@ export default function AddTaskForm({ onAddTasks }: props) {
             >
               Reset
             </Button>
-            <Button type="submit" className="text-black">
+            <Button type="submit" className="text-black bg-white">
               Submit
             </Button>
           </Field>

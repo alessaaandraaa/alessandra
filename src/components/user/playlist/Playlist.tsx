@@ -29,6 +29,7 @@ export default function Playlist() {
         <button
           onClick={login}
           className="bg-white text-black px-6 py-3 rounded-full font-bold"
+          style={{backgroundColor: "rgba(255, 255, 255)"}}
         >
           Login to Spotify
         </button>
@@ -60,6 +61,7 @@ export default function Playlist() {
             className={`px-6 py-2 rounded-full border border-white text-xs ${
               !isReady ? "opacity-50" : "hover:bg-gray-500 hover:text-black"
             }`}
+            style={{backgroundColor: "rgba(255, 255, 255)"}}
           >
             {isReady ? "Start Playlist" : "Loading..."}
           </button>
@@ -92,7 +94,7 @@ export default function Playlist() {
             <Dialog>
               <DialogTrigger asChild>
                 {/* Now the button is the direct child of the flex container! */}
-                <ControlBtn>View Playlists</ControlBtn>
+                <ControlBtn style={{backgroundColor: "rgba(255, 255, 255)"}}>View Playlists</ControlBtn>
               </DialogTrigger>
               <DialogContent className="sm:max-w-106.25">
                 <PlaylistsDialog />
@@ -109,7 +111,7 @@ const ControlBtn = ({ children, onClick, active }: any) => (
   <button
     onClick={onClick}
     className={`btn text-center ${active ? "text-green-400" : "text-gray-700"}`}
-    style={{ padding: "5px 10px", fontSize: "15px" }}
+    style={{ padding: "5px 10px", fontSize: "15px", backgroundColor: "white",}}
   >
     {children}
   </button>

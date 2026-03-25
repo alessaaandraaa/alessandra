@@ -28,6 +28,7 @@ export default function LinksPagination({
       <button
         className="bg-white p-0.5"
         style={{
+          backgroundColor: "rgba(255, 255, 255)",
           fontSize: "10px",
           padding: "1px",
           height: "20px",
@@ -45,6 +46,7 @@ export default function LinksPagination({
         <DialogTrigger asChild>
           <button
             style={{
+              backgroundColor: "rgba(255, 255, 255)",
               fontSize: "10px",
               padding: "1px",
               height: "20px",
@@ -75,8 +77,9 @@ export default function LinksPagination({
       </button>
 
       <button
-        className="bg-white p-0.5"
+        className=" p-0.5"
         style={{
+          backgroundColor: "rgba(255, 255, 255)",
           fontSize: "10px",
           padding: "1px",
           height: "20px",

@@ -2,6 +2,7 @@ type PaginationProps = {
   tasksPerPage: number;
   totalPosts: number;
   currentPage: number;
+  noOfPages: number;
   paginate: (pageNumber: number) => void;
 };
 
@@ -9,6 +10,7 @@ export default function CanvasPagination({
   tasksPerPage,
   totalPosts,
   currentPage,
+  noOfPages,
   paginate,
 }: PaginationProps) {
   const totalPages = Math.ceil(totalPosts / tasksPerPage);
@@ -24,6 +26,7 @@ export default function CanvasPagination({
           width: "20px",
           borderRadius: "50%",
           fontWeight: "bold",
+          backgroundColor: "white",
         }}
         onClick={() => paginate(currentPage - 1)}
         disabled={currentPage === 1}
@@ -31,9 +34,14 @@ export default function CanvasPagination({
         &lt;
       </button>
 
+      <p className="text-white font-bold text-sm">
+        {currentPage} of {noOfPages}
+      </p>
+
       <button
         className="bg-white p-0.5"
         style={{
+          backgroundColor: "white",
           fontSize: "10px",
           padding: "1px",
           height: "20px",

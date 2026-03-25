@@ -15,9 +15,9 @@ export default function TaskButtonListBase({ onAddTasks }: props) {
     <div className="rounded-xl m-2 flex gap-2 justify-center items-center">
       <Dialog>
         <DialogTrigger asChild>
-          {/* Now the button is the direct child of the flex container! */}
           <button
             style={{
+              backgroundColor: "rgba(255, 255, 255)",
               fontSize: "10px",
               padding: "1px",
               height: "20px",
@@ -38,6 +38,7 @@ export default function TaskButtonListBase({ onAddTasks }: props) {
       <button
         className="bg-white p-0.5"
         style={{
+          backgroundColor: "white",
           fontSize: "10px",
           padding: "1px",
           height: "20px",
@@ -52,6 +53,7 @@ export default function TaskButtonListBase({ onAddTasks }: props) {
       <button
         className="bg-white p-0.5"
         style={{
+          backgroundColor: "white",
           fontSize: "10px",
           padding: "1px",
           height: "20px",
@@ -67,6 +69,7 @@ export default function TaskButtonListBase({ onAddTasks }: props) {
         <DialogTrigger asChild>
           <button
             style={{
+              backgroundColor: "rgba(255, 255, 255)",
               fontSize: "10px",
               padding: "1px",
               height: "20px",
