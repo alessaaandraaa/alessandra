@@ -1,25 +1,36 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ImgLinks from "./ImgLinks";
+import EditLinkForm from "./EditLinkForm";
 import LinksPagination from "./LinksPagination";
 import { getLinksQuery } from "@/queries/links.queries";
-import { useAddLinksQuery } from "@/queries/links.queries";
+import { useAddLinksQuery, useEditLinksQuery } from "@/queries/links.queries";
+import { LinksProvider } from "@/contexts/links.contexts";
 
 export default function ImgLinksMain() {
+  /* QUERIES */
   const { data, isLoading } = getLinksQuery();
 
   const add = useAddLinksQuery();
+  const edit = useEditLinksQuery();
 
   const addLink = (data: any) => {
     add.mutate(data);
   };
 
+  const editLink = (data: any) => {
+    edit.mutateAsync(data);
+  };
+
+  /* LINKS DATA */
   const safeData = data || [];
   const mainLinks = safeData.filter((d: any) => d.categories?.includes("Main"));
 
   const projectLinks = safeData.filter((d: any) =>
     d.categories?.includes("Projects"),
   );
+
+  /* PAGINATION */
 
   const [page, setPage] = useState(1);
   const [linksPerPage] = useState(14);
@@ -47,15 +58,25 @@ export default function ImgLinksMain() {
   };
 
   return (
-    <>
+    <LinksProvider onEditLink={editLink}>
       <Tabs
         defaultValue="main"
         className="w-full"
         onValueChange={handleTabChange} // Update active tab state
       >
         <TabsList>
-          <TabsTrigger value="main" style={{backgroundColor: "rgba(255, 255, 255)"}}>Main</TabsTrigger>
-          <TabsTrigger value="projects" style={{backgroundColor: "rgba(255, 255, 255)"}}>Projects</TabsTrigger>
+          <TabsTrigger
+            value="main"
+            style={{ backgroundColor: "rgba(255, 255, 255)" }}
+          >
+            Main
+          </TabsTrigger>
+          <TabsTrigger
+            value="projects"
+            style={{ backgroundColor: "rgba(255, 255, 255)" }}
+          >
+            Projects
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="main">
@@ -74,6 +95,6 @@ export default function ImgLinksMain() {
         paginate={paginate}
         onAddLinks={addLink}
       />
-    </>
+    </LinksProvider>
   );
 }

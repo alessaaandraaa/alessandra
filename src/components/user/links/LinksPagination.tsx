@@ -1,3 +1,4 @@
+import { useLinksContext } from "@/contexts/links.contexts";
 import AddLinksForm from "./AddLinksForm";
 import {
   Dialog,
@@ -22,11 +23,12 @@ export default function LinksPagination({
   onAddLinks,
 }: PaginationProps) {
   const totalPages = Math.ceil(totalPosts / tasksPerPage);
+  const { toggleEditMode } = useLinksContext();
 
   return (
     <div className="rounded-xl m-2 flex gap-10 justify-center items-center">
       <button
-        className="bg-white p-0.5"
+        className="bg-white p-0.5 hover:bg-black hover:text-white text-black"
         style={{
           backgroundColor: "rgba(255, 255, 255)",
           fontSize: "10px",
@@ -45,6 +47,7 @@ export default function LinksPagination({
       <Dialog>
         <DialogTrigger asChild>
           <button
+            className="hover:text-red-800"
             style={{
               backgroundColor: "rgba(255, 255, 255)",
               fontSize: "10px",
@@ -64,6 +67,7 @@ export default function LinksPagination({
         </DialogContent>
       </Dialog>
       <button
+        className=" hover:text-red-800 text-black"
         style={{
           fontSize: "8px",
           backgroundColor: "rgba(255, 255, 255)",
@@ -72,12 +76,13 @@ export default function LinksPagination({
           width: "20px",
           borderRadius: "50%",
         }}
+        onClick={toggleEditMode}
       >
         ✎
       </button>
 
       <button
-        className=" p-0.5"
+        className=" p-0.5 hover:text-red-800"
         style={{
           backgroundColor: "rgba(255, 255, 255)",
           fontSize: "10px",

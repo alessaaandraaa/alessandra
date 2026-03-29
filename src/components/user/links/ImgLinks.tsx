@@ -18,8 +18,14 @@ export default function ImgLinks({ links, isLoading }: props) {
       ) : (
         <div className="items-center relative group">
           <div className="grid grid-cols-7 grid-rows-2 content-start gap-0.5 p-2 rounded-2xl z-10 bg-zinc-700/50 h-45">
-            {links?.map((l: any, index: number) => (
-              <Img key={index} imgLink={l.image} link={l.link} name={l.name} />
+            {links?.map((l: any) => (
+              <Img
+                key={l._id}
+                id={l._id}
+                imgLink={l.image}
+                link={l.link}
+                name={l.name}
+              />
             ))}
           </div>
         </div>
