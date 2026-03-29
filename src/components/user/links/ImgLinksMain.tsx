@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ImgLinks from "./ImgLinks";
-import EditLinkForm from "./EditLinkForm";
 import LinksPagination from "./LinksPagination";
 import { getLinksQuery } from "@/queries/links.queries";
 import { useAddLinksQuery, useEditLinksQuery } from "@/queries/links.queries";
