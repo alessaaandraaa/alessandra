@@ -28,6 +28,17 @@ export const useAddLinksQuery = () => {
       );
       return response.data;
     },
+    onMutate: async (newLink: any) => {
+      await queryClient.cancelQueries({ queryKey: ["links"] });
+
+      const prevLinks = queryClient.getQueryData<any[]>(["links"]);
+      queryClient.setQueryData(["links"], (old: any) => [
+        ...(old ?? []),
+        newLink,
+      ]);
+
+      return { prevLinks };
+    },
     onSuccess: () => {
       queryClient.refetchQueries({ queryKey: ["links"] });
     },
@@ -56,6 +67,36 @@ export const useEditLinksQuery = () => {
       const prevLinks = queryClient.getQueryData(["links"]);
       queryClient.setQueryData(["links"], (old: any) =>
         old.map((l: any) => (l._id === link.id ? { ...l, ...link } : l)),
+      );
+
+      return { prevLinks };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["links"] });
+    },
+    onError: (_error, _variables, context: any) => {
+      if (context?.prevLinks) {
+        queryClient.setQueryData(["links"], context.prevLinks);
+      }
+    },
+  });
+};
+
+export const useDeleteLinksQuery = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, Error, any>({
+    mutationFn: async (id) => {
+      const { data } = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/links/${id}`,
+      );
+      return data;
+    },
+    onMutate: async (id: string) => {
+      await queryClient.cancelQueries({ queryKey: ["links"] });
+
+      const prevLinks = queryClient.getQueryData(["links"]);
+      queryClient.setQueryData(["links"], (old: any) =>
+        old.filter((l: any) => l._id !== id),
       );
 
       return { prevLinks };

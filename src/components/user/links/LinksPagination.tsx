@@ -6,7 +6,6 @@ import {
   DialogTrigger,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 type PaginationProps = {
   tasksPerPage: number;
   totalPosts: number;
@@ -23,7 +22,7 @@ export default function LinksPagination({
   onAddLinks,
 }: PaginationProps) {
   const totalPages = Math.ceil(totalPosts / tasksPerPage);
-  const { toggleEditMode } = useLinksContext();
+  const { mode, toggleMode } = useLinksContext();
 
   return (
     <div className="rounded-xl m-2 flex gap-10 justify-center items-center">
@@ -76,9 +75,24 @@ export default function LinksPagination({
           width: "20px",
           borderRadius: "50%",
         }}
-        onClick={toggleEditMode}
+        onClick={() => toggleMode("edit")}
       >
         ✎
+      </button>
+
+      <button
+        className=" hover:text-red-800 text-black"
+        style={{
+          fontSize: "8px",
+          backgroundColor: "rgba(255, 255, 255)",
+          padding: "1px",
+          height: "20px",
+          width: "20px",
+          borderRadius: "50%",
+        }}
+        onClick={() => toggleMode("delete")}
+      >
+        🗑
       </button>
 
       <button

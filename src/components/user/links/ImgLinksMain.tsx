@@ -3,7 +3,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ImgLinks from "./ImgLinks";
 import LinksPagination from "./LinksPagination";
 import { getLinksQuery } from "@/queries/links.queries";
-import { useAddLinksQuery, useEditLinksQuery } from "@/queries/links.queries";
+import {
+  useAddLinksQuery,
+  useEditLinksQuery,
+  useDeleteLinksQuery,
+} from "@/queries/links.queries";
 import { LinksProvider } from "@/contexts/links.contexts";
 
 export default function ImgLinksMain() {
@@ -12,6 +16,7 @@ export default function ImgLinksMain() {
 
   const add = useAddLinksQuery();
   const edit = useEditLinksQuery();
+  const del = useDeleteLinksQuery();
 
   const addLink = (data: any) => {
     add.mutate(data);
@@ -19,6 +24,10 @@ export default function ImgLinksMain() {
 
   const editLink = (data: any) => {
     edit.mutateAsync(data);
+  };
+
+  const deleteLink = (linkId: any) => {
+    del.mutateAsync(linkId);
   };
 
   /* LINKS DATA */
@@ -57,7 +66,7 @@ export default function ImgLinksMain() {
   };
 
   return (
-    <LinksProvider onEditLink={editLink}>
+    <LinksProvider onEditLink={editLink} onDeleteLink={deleteLink}>
       <Tabs
         defaultValue="main"
         className="w-full"
