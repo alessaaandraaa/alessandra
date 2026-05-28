@@ -22,7 +22,7 @@ export default function LinksPagination({
   onAddLinks,
 }: PaginationProps) {
   const totalPages = Math.ceil(totalPosts / tasksPerPage);
-  const { mode, toggleMode } = useLinksContext();
+  const { toggleMode } = useLinksContext();
 
   return (
     <div className="rounded-xl m-2 flex gap-10 justify-center items-center">
