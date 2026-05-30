@@ -81,9 +81,7 @@ export default function AddLinksForm({ onAddLinks }: props) {
 
       const body = { ...data, image: base64Image };
 
-      // Calculate size in bytes
       const sizeInBytes = new Blob([JSON.stringify(body)]).size;
-      const sizeInMB = (sizeInBytes / (1024 * 1024)).toFixed(2);
 
       if (sizeInBytes > 4500000) {
         console.error("Warning: This exceeds Vercel's 4.5MB limit!");

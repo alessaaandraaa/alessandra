@@ -35,7 +35,7 @@ export default function QueryProvider({ children }: Props) {
       persistOptions={{
         persister,
         dehydrateOptions: {
-          shouldDehydrateQuery: (query) => {
+          shouldDehydrateQuery: () => {
             return true;
           },
         },

@@ -29,6 +29,7 @@ export default function AddTaskForm({ onAddTasks, onClose }: props) {
     };
     onAddTasks(body);
     form.reset();
+    onClose();
   }
 
   return (

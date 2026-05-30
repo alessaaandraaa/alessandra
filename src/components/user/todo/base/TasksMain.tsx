@@ -6,9 +6,6 @@ import {
   useEditTasksQuery,
   useDeleteTasksQuery,
 } from "@/queries/tasks.queries";
-import type { BasicTask } from "@/lib/types";
-import BaseTask from "./BaseTask";
-import TaskSkeleton from "../TaskSkeleton";
 import TaskButtonList from "./TaskButtonsBase";
 import BasicTaskList from "./BasicTaskList";
 export default function TasksMain() {
