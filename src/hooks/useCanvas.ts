@@ -14,7 +14,6 @@ export function useCanvas() {
         if (res.ok) {
           const data = await res.json();
           setAssignments(data);
-          console.log("DATA: ", data);
         }
       } catch (e) {
         console.error("Error fetching data.", e);

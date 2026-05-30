@@ -91,7 +91,6 @@ export default function EditLinkForm({ onEditLink, linkData, onClose }: props) {
       const id = linkData.id;
       const body = { ...data, id, image: base64Image || linkData.imgLink };
 
-      console.log("EDIT BODY: ", body);
       onEditLink(body);
       onClose();
       form.reset();

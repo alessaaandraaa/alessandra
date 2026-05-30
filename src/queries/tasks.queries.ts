@@ -28,8 +28,19 @@ export const useAddTasksQuery = () => {
       );
       return response.data;
     },
+    onMutate: async (newTask: any) => {
+      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+
+      const prevTasks = queryClient.getQueryData<any[]>(["tasks"]);
+      queryClient.setQueryData(["tasks"], (old: any) => [
+        ...(old ?? []),
+        newTask,
+      ]);
+
+      return { prevTasks };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.refetchQueries({ queryKey: ["tasks"] });
     },
     onError: (_error, _variables, context: any) => {
       if (context?.prevTasks) {
@@ -43,20 +54,34 @@ export const useEditTasksQuery = () => {
   const queryClient = useQueryClient();
   return useMutation<any, Error, any>({
     mutationFn: async (tasksData) => {
-      const { id, ...rest } = tasksData;
+      const { _id, ...rest } = tasksData;
+
+      console.log("TASK DATA: ", tasksData);
       const { data } = await axios.put(
-        "https://spotify-backend-eight-pink.vercel.app/api/tasks",
-        { id, ...rest },
+        `https://spotify-backend-eight-pink.vercel.app/api/tasks/${_id}`,
+        rest,
       );
       return data;
     },
+    onMutate: async (task: any) => {
+      await queryClient.cancelQueries({ queryKey: ["tasks"] });
 
+      const prevTasks = queryClient.getQueryData(["tasks"]);
+      queryClient.setQueryData(["tasks"], (old: any) =>
+        old.map((t: any) => (t._id === task.id ? { ...t, ...task } : t)),
+      );
+
+      return { prevTasks };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
 
-    onError: (error) => {
-      console.error("Error editing task: ", error);
+    onError: (_error, _variables, context: any) => {
+      if (context?.prevTasks) {
+        queryClient.setQueryData(["tasks"], context.prevTasks);
+      }
+      console.error("Error editing task: ", _error);
     },
   });
 };
@@ -64,21 +89,31 @@ export const useEditTasksQuery = () => {
 export const useDeleteTasksQuery = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<any, Error, { id: number }>({
-    mutationFn: async ({ id }) => {
+  return useMutation<any, Error, any>({
+    mutationFn: async (taskId) => {
       const { data } = await axios.delete(
-        `https://spotify-backend-eight-pink.vercel.app/api/tasks`,
-        {
-          data: { id: id },
-        },
+        `https://spotify-backend-eight-pink.vercel.app/api/tasks/${taskId}`,
       );
       return data;
+    },
+    onMutate: async (taskId: string) => {
+      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+
+      const prevTasks = queryClient.getQueryData(["tasks"]);
+      queryClient.setQueryData(["tasks"], (old: any) =>
+        old.filter((t: any) => t._id !== taskId),
+      );
+
+      return { prevTasks };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
-    onError: (error) => {
-      console.error("Error deleting task:", error);
+    onError: (_error, _variables, context: any) => {
+      if (context?.prevTasks) {
+        queryClient.setQueryData(["tasks"], context.prevTasks);
+      }
+      console.error("Error deleting task:", _error);
     },
   });
 };

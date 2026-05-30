@@ -36,7 +36,6 @@ export default function QueryProvider({ children }: Props) {
         persister,
         dehydrateOptions: {
           shouldDehydrateQuery: (query) => {
-            console.log("Persisting:", query.queryKey);
             return true;
           },
         },

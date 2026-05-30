@@ -24,7 +24,6 @@ export default function DeleteModeImg({ imgLink, name, id }: EditModeImgProps) {
 
   async function onDelete() {
     try {
-      console.log("ID: ", id);
       deleteLink(id);
       setOpen(false);
     } catch (error) {
