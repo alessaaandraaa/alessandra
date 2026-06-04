@@ -13,8 +13,6 @@ type props = {
   onClose: () => void;
 };
 
-l;
-
 export default function EditTaskForm({
   onEditTasks,
   taskData,

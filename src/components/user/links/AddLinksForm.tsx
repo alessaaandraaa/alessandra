@@ -65,7 +65,7 @@ export default function AddLinksForm({ onAddLinks }: props) {
     const fileToBase64 = (file: File): Promise<string> => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.readAsDataURL(file); // This reads the file and includes the metadata (e.g., data:image/png;base64,...)
+        reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result as string);
         reader.onerror = (error) => reject(error);
       });
@@ -74,7 +74,6 @@ export default function AddLinksForm({ onAddLinks }: props) {
     try {
       let base64Image = "";
 
-      // Only attempt conversion if an image actually exists
       if (data.image instanceof File) {
         base64Image = await fileToBase64(data.image);
       }
