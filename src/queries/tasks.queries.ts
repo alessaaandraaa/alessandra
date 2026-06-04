@@ -50,8 +50,6 @@ export const useAddTasksQuery = () => {
   });
 };
 
-length;
-
 export const useEditTasksQuery = () => {
   const queryClient = useQueryClient();
   return useMutation<any, Error, any>({
