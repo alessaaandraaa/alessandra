@@ -1,12 +1,32 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import "./index.css";
-import App from "./App.tsx";
-import QueryProvider from "./components/provider.tsx";
-createRoot(document.getElementById("root")!).render(
+import QueryProvider from "./components/provider";
+const router = createBrowserRouter([
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+  },
+  {
+    path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <QueryProvider>
-    <StrictMode>
-      <App />
-    </StrictMode>
+    {" "}
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+    ,
   </QueryProvider>,
 );

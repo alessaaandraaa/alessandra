@@ -27,6 +27,7 @@ export default function BasicTaskList({
         ) : (
           tasks.map((t: BasicTask) => (
             <BaseTask
+              key={t._id}
               task={t}
               onDeleteTasks={deleteTask}
               onEditTasks={editTask}

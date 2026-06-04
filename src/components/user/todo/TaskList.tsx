@@ -18,7 +18,7 @@ export default function TaskList() {
             value="doable"
             style={{ backgroundColor: "rgba(255, 255, 255)" }}
           >
-            Doable
+            Base
           </TabsTrigger>
         </TabsList>
         <TabsContent value="canvas" className="flex-1 flex flex-col">

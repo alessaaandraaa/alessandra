@@ -21,7 +21,6 @@ export default function BaseTask({
         </p>
       </div>
       <div className="flex items-center gap-2">
-        ☐
         <TaskEditButton
           taskData={task}
           onEditTasks={onEditTasks}
