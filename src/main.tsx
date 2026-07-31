@@ -8,11 +8,11 @@ import "./index.css";
 import QueryProvider from "./components/provider";
 const router = createBrowserRouter([
   {
-    path: "/dashboard",
+    path: "/",
     element: <Dashboard />,
   },
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
   },
   {

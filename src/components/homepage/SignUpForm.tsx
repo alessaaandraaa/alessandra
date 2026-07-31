@@ -29,6 +29,7 @@ const formSchema = z.object({
 const authService = new AuthService();
 
 export default function SignupForm() {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,7 +46,7 @@ export default function SignupForm() {
         password: data.password,
         name: data.name,
       });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);

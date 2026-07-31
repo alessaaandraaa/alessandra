@@ -25,7 +25,7 @@ export class AuthService {
     const { data, error } = await authClient.signIn.email({
       email,
       password,
-      callbackURL: "/dashboard",
+      callbackURL: "/",
     });
 
     if (error) throw new Error(error.message);
