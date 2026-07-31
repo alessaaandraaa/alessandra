@@ -11,6 +11,9 @@ export const getLinksQuery = () => {
     queryFn: async () => {
       const response = await axios.get(
         "https://spotify-backend-eight-pink.vercel.app/api/links",
+        {
+          withCredentials: true,
+        },
       );
       return response.data;
     },
@@ -25,6 +28,9 @@ export const useAddLinksQuery = () => {
       const response = await axios.post(
         `https://spotify-backend-eight-pink.vercel.app/api/links`,
         data,
+        {
+          withCredentials: true,
+        },
       );
       return response.data;
     },
@@ -58,6 +64,9 @@ export const useEditLinksQuery = () => {
       const { data } = await axios.put(
         `${import.meta.env.VITE_API_URL}/api/links/${id}`,
         rest,
+        {
+          withCredentials: true,
+        },
       );
       return data;
     },
@@ -88,6 +97,9 @@ export const useDeleteLinksQuery = () => {
     mutationFn: async (id) => {
       const { data } = await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/links/${id}`,
+        {
+          withCredentials: true,
+        },
       );
       return data;
     },

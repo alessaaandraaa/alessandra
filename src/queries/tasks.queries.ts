@@ -11,6 +11,9 @@ export const getTasksQuery = () => {
     queryFn: async () => {
       const response = await axios.get(
         "https://spotify-backend-eight-pink.vercel.app/api/tasks",
+        {
+          withCredentials: true,
+        },
       );
       return response.data;
     },
@@ -25,6 +28,9 @@ export const useAddTasksQuery = () => {
       const response = await axios.post(
         `https://spotify-backend-eight-pink.vercel.app/api/tasks`,
         data,
+        {
+          withCredentials: true,
+        },
       );
       return response.data;
     },
@@ -60,6 +66,9 @@ export const useEditTasksQuery = () => {
       const { data } = await axios.put(
         `https://spotify-backend-eight-pink.vercel.app/api/tasks/${_id}`,
         rest,
+        {
+          withCredentials: true,
+        },
       );
       return data;
     },
@@ -93,6 +102,9 @@ export const useDeleteTasksQuery = () => {
     mutationFn: async (taskId) => {
       const { data } = await axios.delete(
         `https://spotify-backend-eight-pink.vercel.app/api/tasks/${taskId}`,
+        {
+          withCredentials: true,
+        },
       );
       return data;
     },

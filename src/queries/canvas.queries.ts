@@ -11,6 +11,9 @@ export const getCanvasQuery = () => {
     queryFn: async () => {
       const response = await axios.get(
         "https://spotify-backend-eight-pink.vercel.app/api/canvas",
+        {
+          withCredentials: true,
+        },
       );
       return response.data;
     },
