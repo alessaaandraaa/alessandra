@@ -45,7 +45,7 @@ export default function LoginForm() {
         email: data.email,
         password: data.password,
       });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -140,7 +140,7 @@ export default function LoginForm() {
           >
             <Link
               to={{
-                pathname: "/dashboard",
+                pathname: "/",
               }}
             >
               Continue as guest
