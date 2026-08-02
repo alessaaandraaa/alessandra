@@ -14,6 +14,8 @@ export default function ImgLinksMain() {
   /* QUERIES */
   const { data, isLoading } = getLinksQuery();
 
+  console.log("LINKS: ", data);
+
   const add = useAddLinksQuery();
   const edit = useEditLinksQuery();
   const del = useDeleteLinksQuery();

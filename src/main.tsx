@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import "./index.css";
 import QueryProvider from "./components/provider";
+import { AuthStateProvider } from "./contexts/auth.contexts";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,8 +26,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <QueryProvider>
     {" "}
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthStateProvider>
+        <RouterProvider router={router} />
+      </AuthStateProvider>
     </React.StrictMode>
-    ,
   </QueryProvider>,
 );

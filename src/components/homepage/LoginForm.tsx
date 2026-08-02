@@ -21,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { AuthService } from "@/services/auth.service";
 import { useNavigate } from "react-router-dom";
+import { useAuthStateContext } from "@/contexts/auth.contexts";
 
 const authService = new AuthService();
 
@@ -30,6 +31,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { setGuestMode } = useAuthStateContext();
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -138,11 +140,7 @@ export default function LoginForm() {
             variant="outline"
             className="w-full bg-gradient-to-br from-white to-purple-300 text-[#4e0e19] rounded-lg"
           >
-            <Link
-              to={{
-                pathname: "/",
-              }}
-            >
+            <Link to="/" onClick={() => setGuestMode(true)}>
               Continue as guest
             </Link>
           </Button>

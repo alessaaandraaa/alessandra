@@ -21,3 +21,12 @@ export interface CanvasTask {
 export interface BasicTask extends BaseTask {
   notes: string;
 }
+
+export interface Link {
+  _id: string;
+  name: string;
+  link: string;
+  image: string;
+  categories: string[];
+  userId: string;
+}
