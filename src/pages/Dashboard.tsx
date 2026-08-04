@@ -2,11 +2,10 @@ import "../App.css";
 import ToDo from "@/components/user/todo/ToDo";
 import Playlist from "@/components/user/playlist/Playlist";
 import ImgLinksMain from "@/components/user/links/ImgLinksMain";
-import { Navigate } from "react-router-dom";
 import { authClient } from "@/lib/auth-client";
 
 export default function Dashboard() {
-  const { data: session, isPending } = authClient.useSession();
+  const { isPending } = authClient.useSession();
 
   if (isPending) {
     return <div>Loading...</div>;
