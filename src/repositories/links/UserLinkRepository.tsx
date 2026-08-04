@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { LinkRepository } from "./LinkRepository";
-import type { Link } from "@/lib/types";
+import type { Link } from "@/lib/types/schema.types";
 
 export class UserLinkRepository implements LinkRepository {
   async getLinks() {

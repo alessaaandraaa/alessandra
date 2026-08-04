@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import EditTaskForm from "./EditTaskForm";
-import type { BasicTask } from "@/lib/types";
+import type { BasicTask } from "@/lib/types/schema.types";
 
 type EditTaskProps = {
   taskData: BasicTask;

@@ -1,11 +1,13 @@
 import { useLinksContext } from "@/contexts/links.contexts";
-import AddLinksForm from "./AddLinksForm";
+import AddLinksForm from "./forms/AddLinksForm";
+
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 type PaginationProps = {
   tasksPerPage: number;
   totalPosts: number;
@@ -61,7 +63,7 @@ export default function LinksPagination({
           </button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-106.25">
-          <DialogTitle>Add Task</DialogTitle>
+          <DialogTitle>Add Link</DialogTitle>
           <AddLinksForm onAddLinks={onAddLinks} />
         </DialogContent>
       </Dialog>

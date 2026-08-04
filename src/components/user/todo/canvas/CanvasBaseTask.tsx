@@ -1,4 +1,4 @@
-import type { CanvasTask } from "@/lib/types";
+import type { CanvasTask } from "@/lib/types/schema.types";
 /*import {
   Dialog,
   DialogContent,

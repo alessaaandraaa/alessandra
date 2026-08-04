@@ -11,7 +11,7 @@ export function useTaskRepository() {
 
   const { authState } = useAuthStateContext();
 
-  return { authState, repo: authState === "guest" ? guestRepo : userRepo };
+  return { authState, repo: authState === "user" ? userRepo : guestRepo };
 }
 
 export function useLinkRepository() {
@@ -20,5 +20,5 @@ export function useLinkRepository() {
 
   const { authState } = useAuthStateContext();
 
-  return { authState, repo: authState === "guest" ? guestRepo : userRepo };
+  return { authState, repo: authState === "user" ? userRepo : guestRepo };
 }

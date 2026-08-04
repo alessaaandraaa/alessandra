@@ -14,6 +14,8 @@ export function AuthStateProvider({ children }: { children: React.ReactNode }) {
   const [guestMode, setGuestMode] = useState(false);
 
   const authState = session ? "user" : guestMode ? "guest" : "none";
+  console.log("AUTH STATE: ", authState);
+  console.log("SESSION DATA: ", session);
 
   return (
     <AuthStateContext.Provider

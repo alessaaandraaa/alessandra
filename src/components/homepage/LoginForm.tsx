@@ -139,10 +139,12 @@ export default function LoginForm() {
             type="button"
             variant="outline"
             className="w-full bg-gradient-to-br from-white to-purple-300 text-[#4e0e19] rounded-lg"
+            onClick={() => {
+              setGuestMode(true);
+              navigate("/");
+            }}
           >
-            <Link to="/" onClick={() => setGuestMode(true)}>
-              Continue as guest
-            </Link>
+            Continue as guest
           </Button>
 
           <p className="text-center text-sm text-[#ffe0ea] mt-2">

@@ -1,4 +1,4 @@
-import type { BasicTask } from "@/lib/types";
+import type { BasicTask } from "@/lib/types/schema.types";
 import TaskEditButton from "./TaskEditButton";
 import { formatReadableDate } from "@/lib/utils";
 type TaskProps = {

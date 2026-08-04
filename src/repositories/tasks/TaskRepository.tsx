@@ -1,4 +1,4 @@
-import type { BasicTask } from "@/lib/types";
+import type { BasicTask } from "@/lib/types/schema.types";
 
 export interface TaskRepository {
   getTasks(): Promise<BasicTask[]>;

@@ -1,4 +1,4 @@
-import type { Link } from "@/lib/types";
+import type { Link } from "@/lib/types/schema.types";
 
 export interface LinkRepository {
   getLinks(): Promise<Link[]>;

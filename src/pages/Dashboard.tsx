@@ -12,10 +12,6 @@ export default function Dashboard() {
     return <div>Loading...</div>;
   }
 
-  if (!session) {
-    return <Navigate to="/login" replace />;
-  }
-
   return (
     <div className="flex gap-5 cursor-pointer group select-none justify-center w-full">
       <ToDo />
