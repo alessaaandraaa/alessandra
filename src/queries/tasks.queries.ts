@@ -1,38 +1,34 @@
 "use client";
 
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import axios from "axios";
-
+import { useTaskRepository } from "@/repositories/repo.hooks";
 const STALE_TIME = 1000 * 60 * 5;
 
 export const getTasksQuery = () => {
+  const { authState, repo } = useTaskRepository();
   return useQuery({
-    queryKey: ["tasks"],
+    queryKey: ["tasks", authState],
     queryFn: async () => {
-      const response = await axios.get(
-        "https://spotify-backend-eight-pink.vercel.app/api/tasks",
-      );
-      return response.data;
+      return await repo.getTasks();
     },
     staleTime: STALE_TIME,
   });
 };
 
 export const useAddTasksQuery = () => {
+  const { authState, repo } = useTaskRepository();
   const queryClient = useQueryClient();
   return useMutation<any, Error, any, { prevTasks?: any[] }>({
     mutationFn: async (data) => {
-      const response = await axios.post(
-        `https://spotify-backend-eight-pink.vercel.app/api/tasks`,
-        data,
-      );
-      return response.data;
+      return await repo.addTask(data);
     },
     onMutate: async (newTask: any) => {
-      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+      await queryClient.cancelQueries({
+        queryKey: ["tasks", authState],
+      });
 
-      const prevTasks = queryClient.getQueryData<any[]>(["tasks"]);
-      queryClient.setQueryData(["tasks"], (old: any) => [
+      const prevTasks = queryClient.getQueryData<any[]>(["tasks", authState]);
+      queryClient.setQueryData(["tasks", authState], (old: any) => [
         ...(old ?? []),
         newTask,
       ]);
@@ -40,46 +36,42 @@ export const useAddTasksQuery = () => {
       return { prevTasks };
     },
     onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ["tasks"] });
+      queryClient.refetchQueries({ queryKey: ["tasks", authState] });
     },
     onError: (_error, _variables, context: any) => {
       if (context?.prevTasks) {
-        queryClient.setQueryData(["tasks"], context.prevTasks);
+        queryClient.setQueryData(["tasks", authState], context.prevTasks);
       }
     },
   });
 };
 
 export const useEditTasksQuery = () => {
+  const { authState, repo } = useTaskRepository();
   const queryClient = useQueryClient();
   return useMutation<any, Error, any>({
     mutationFn: async (tasksData) => {
-      const { _id, ...rest } = tasksData;
-
-      console.log("TASK DATA: ", tasksData);
-      const { data } = await axios.put(
-        `https://spotify-backend-eight-pink.vercel.app/api/tasks/${_id}`,
-        rest,
-      );
-      return data;
+      return await repo.editTask(tasksData);
     },
     onMutate: async (task: any) => {
-      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+      await queryClient.cancelQueries({
+        queryKey: ["tasks", authState],
+      });
 
-      const prevTasks = queryClient.getQueryData(["tasks"]);
-      queryClient.setQueryData(["tasks"], (old: any) =>
+      const prevTasks = queryClient.getQueryData(["tasks", authState]);
+      queryClient.setQueryData(["tasks", authState], (old: any) =>
         old.map((t: any) => (t._id === task.id ? { ...t, ...task } : t)),
       );
 
       return { prevTasks };
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["tasks", authState] });
     },
 
     onError: (_error, _variables, context: any) => {
       if (context?.prevTasks) {
-        queryClient.setQueryData(["tasks"], context.prevTasks);
+        queryClient.setQueryData(["tasks", authState], context.prevTasks);
       }
       console.error("Error editing task: ", _error);
     },
@@ -87,31 +79,31 @@ export const useEditTasksQuery = () => {
 };
 
 export const useDeleteTasksQuery = () => {
+  const { authState, repo } = useTaskRepository();
   const queryClient = useQueryClient();
 
   return useMutation<any, Error, any>({
     mutationFn: async (taskId) => {
-      const { data } = await axios.delete(
-        `https://spotify-backend-eight-pink.vercel.app/api/tasks/${taskId}`,
-      );
-      return data;
+      return await repo.deleteTask(taskId);
     },
     onMutate: async (taskId: string) => {
-      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+      await queryClient.cancelQueries({
+        queryKey: ["tasks", authState],
+      });
 
-      const prevTasks = queryClient.getQueryData(["tasks"]);
-      queryClient.setQueryData(["tasks"], (old: any) =>
+      const prevTasks = queryClient.getQueryData(["tasks", authState]);
+      queryClient.setQueryData(["tasks", authState], (old: any) =>
         old.filter((t: any) => t._id !== taskId),
       );
 
       return { prevTasks };
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["tasks", authState] });
     },
     onError: (_error, _variables, context: any) => {
       if (context?.prevTasks) {
-        queryClient.setQueryData(["tasks"], context.prevTasks);
+        queryClient.setQueryData(["tasks", authState], context.prevTasks);
       }
       console.error("Error deleting task:", _error);
     },

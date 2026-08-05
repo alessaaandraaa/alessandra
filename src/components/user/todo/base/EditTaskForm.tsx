@@ -23,7 +23,7 @@ export default function EditTaskForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: taskData.name,
-      notes: taskData.notes,
+      notes: taskData.notes ?? "",
       priority: taskData.priority,
       dueDate: taskData.dueDate,
     },

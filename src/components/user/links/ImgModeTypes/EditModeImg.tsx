@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import EditLinkForm from "../EditLinkForm";
+import EditLinksForm from "../forms/EditLinksForm";
 import { useLinksContext } from "@/contexts/links.contexts";
 
 type EditModeImgProps = {
@@ -43,7 +43,7 @@ export default function EditModeImg({
         <DialogHeader>
           <DialogTitle>Edit Link</DialogTitle>
         </DialogHeader>
-        <EditLinkForm
+        <EditLinksForm
           onEditLink={editLink}
           linkData={{ id, name, link, imgLink }}
           onClose={() => setOpen(false)}
