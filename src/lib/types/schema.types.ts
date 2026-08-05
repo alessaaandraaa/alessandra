@@ -30,3 +30,11 @@ export interface Link {
   categories: string[];
   userId: string;
 }
+
+export interface CalendarEvent {
+  _id?: string;
+  id?: number;
+  title: string;
+  start: Date | string;
+  end: Date | string;
+}
