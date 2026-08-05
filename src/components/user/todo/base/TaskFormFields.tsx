@@ -137,7 +137,7 @@ export default function TaskFormFields({ control, reset, onDelete }: props) {
                 />
                 <InputGroupAddon align="block-end">
                   <InputGroupText className="tabular-nums">
-                    {field.value.length}/100 characters
+                    {field.value?.length ?? 0}/100 characters
                   </InputGroupText>
                 </InputGroupAddon>
               </InputGroup>

@@ -25,7 +25,7 @@ export default function TaskEditButton({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon-sm" className="text-black p-0.5">
+        <Button variant="outline" size="icon-sm" className="text-black p-0.5!">
           ⮞
         </Button>
       </DialogTrigger>

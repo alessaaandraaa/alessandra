@@ -21,3 +21,11 @@ export interface CanvasTask {
 export interface BasicTask extends BaseTask {
   notes: string;
 }
+
+export interface CalendarEvent {
+  _id?: string;
+  id?: number;
+  title: string;
+  start: Date | string;
+  end: Date | string;
+}

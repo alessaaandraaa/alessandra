@@ -1,5 +1,6 @@
 import CanvasBaseTask from "./CanvasBaseTask";
 import TaskSkeleton from "../TaskSkeleton";
+
 type CanvasProps = {
   loading: boolean;
   tasks: any;

@@ -13,7 +13,7 @@ export default function BaseTask({
   onDeleteTasks,
 }: TaskProps) {
   return (
-    <div className="text-white mb-3 flex justify-between items-center bg-red-500/50 rounded-md p-2 shadow-2xl text-left min-w-60">
+    <div className="text-white mb-2 flex justify-between items-center bg-red-500/50 rounded-md p-1 px-2 shadow-2xl text-left min-w-60">
       <div>
         <p className="font-bold text-[10px]">{task.name}</p>
         <p className="font-thin text-[8px]">
