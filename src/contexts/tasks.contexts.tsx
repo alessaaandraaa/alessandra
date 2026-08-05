@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useMemo } from "react";
-import type { CanvasTask, CalendarEvent, BasicTask } from "@/lib/types";
-
+import type {
+  CanvasTask,
+  CalendarEvent,
+  BasicTask,
+} from "@/lib/types/schema.types";
 type TasksContextType = {
   canvasTasks: CanvasTask[];
   basicTasks: BasicTask[];
@@ -10,8 +13,8 @@ type TasksContextType = {
 const TasksContext = createContext<TasksContextType | null>(null);
 
 export function TasksProvider({ children }: { children: React.ReactNode }) {
-  const [canvasTasks, setCanvasTasks] = useState<CanvasTask[]>([]);
-  const [basicTasks, setBasicTasks] = useState<BasicTask[]>([]);
+  const [canvasTasks] = useState<CanvasTask[]>([]);
+  const [basicTasks] = useState<BasicTask[]>([]);
 
   const calendarEvents = useMemo(() => {
     const normalizedCanvas: CalendarEvent[] = canvasTasks.map((task) => ({
