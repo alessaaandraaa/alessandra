@@ -5,6 +5,7 @@ export interface BaseTask {
   status: "ongoing" | "done";
   priority: "high" | "moderate" | "low" | "backlog";
   dueDate: Date;
+  userId?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -28,7 +29,7 @@ export interface Link {
   link: string;
   image: string;
   categories: string[];
-  userId: string;
+  userId?: string;
 }
 
 export interface CalendarEvent {
