@@ -4,17 +4,10 @@ import type { BasicTask } from "@/lib/types/schema.types";
 
 type CanvasProps = {
   loading: boolean;
-  deleteTask: (data: any) => void;
-  editTask: (data: any) => void;
   tasks: any;
 };
 
-export default function BasicTaskList({
-  loading,
-  tasks,
-  deleteTask,
-  editTask,
-}: CanvasProps) {
+export default function BasicTaskList({ loading, tasks }: CanvasProps) {
   return (
     <>
       <div>
@@ -25,14 +18,7 @@ export default function BasicTaskList({
         ) : tasks.length === 0 ? (
           <p className="text-white">No tasks!</p>
         ) : (
-          tasks.map((t: BasicTask) => (
-            <BaseTask
-              key={t._id}
-              task={t}
-              onDeleteTasks={deleteTask}
-              onEditTasks={editTask}
-            />
-          ))
+          tasks.map((t: BasicTask) => <BaseTask key={t._id} task={t} />)
         )}
       </div>
     </>

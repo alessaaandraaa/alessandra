@@ -1,32 +1,10 @@
 "use client";
 import { useState } from "react";
-import {
-  getTasksQuery,
-  useAddTasksQuery,
-  useEditTasksQuery,
-  useDeleteTasksQuery,
-} from "@/queries/tasks.queries";
+import { getTasksQuery } from "@/queries/tasks.queries";
 import TaskButtonList from "./TaskButtonsBase";
 import BasicTaskList from "./BasicTaskList";
 export default function TasksMain() {
   const { data, isLoading } = getTasksQuery();
-
-  const add = useAddTasksQuery();
-  const edit = useEditTasksQuery();
-  const del = useDeleteTasksQuery();
-
-  const addTask = (data: any) => {
-    add.mutate(data);
-  };
-
-  const editTask = (data: any) => {
-    console.log("EDIT TASK DATAAAA: ", data);
-    edit.mutateAsync(data);
-  };
-
-  const deleteTask = (taskId: any) => {
-    del.mutateAsync(taskId);
-  };
 
   // pagination
 
@@ -45,15 +23,9 @@ export default function TasksMain() {
   return (
     <>
       <div className="flex-1 w-full flex flex-col bg-white/5 rounded-2xl p-2">
-        <BasicTaskList
-          loading={isLoading}
-          tasks={currentTasks}
-          deleteTask={deleteTask}
-          editTask={editTask}
-        />
+        <BasicTaskList loading={isLoading} tasks={currentTasks} />
       </div>
       <TaskButtonList
-        onAddTasks={addTask}
         tasksPerPage={tasksPerPage}
         totalPosts={length}
         currentPage={page}

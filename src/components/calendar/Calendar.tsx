@@ -1,41 +1,42 @@
-import * as React from "react";
 import { EventCalendar } from "@mui/x-scheduler/event-calendar";
-import type { SchedulerEvent } from "@mui/x-scheduler/models";
-
-const initialEvents: SchedulerEvent[] = [
-  {
-    id: 1,
-    title: "Team Meeting",
-    start: "2024-01-15T10:00:00",
-    end: "2024-01-15T11:00:00",
-  },
-  {
-    id: 2,
-    title: "Project Review",
-    start: "2024-01-16T14:00:00",
-    end: "2024-01-16T15:30:00",
-  },
-  {
-    id: 3,
-    title: "Client Call",
-    start: "2024-01-17T09:00:00",
-    end: "2024-01-17T10:00:00",
-  },
-];
+import { useMemo } from "react";
+import type { CalendarEvent } from "@/lib/types/schema.types";
+import { getCanvasQuery } from "@/queries/canvas.queries";
+import { getTasksQuery } from "@/queries/tasks.queries";
 
 export default function RenderMonthCalendar() {
-  const [events, setEvents] = React.useState<SchedulerEvent[]>(initialEvents);
+  const { data: canvasTasks } = getCanvasQuery();
+  const { data: basicTasks } = getTasksQuery();
+
+  const calendarEvents = useMemo(() => {
+    const normalizedCanvas: CalendarEvent[] = canvasTasks.map((task: any) => ({
+      id: task.id,
+      title: task.name,
+      start: task.due,
+      end: task.due,
+      readOnly: true,
+    }));
+
+    const normalizedBasic: CalendarEvent[] = basicTasks.map((task: any) => ({
+      id: task._id,
+      title: task.name,
+      start: task.dueDate,
+      end: task.dueDate,
+      readOnly: true,
+    }));
+
+    return [...normalizedCanvas, ...normalizedBasic];
+  }, [canvasTasks, basicTasks]);
 
   return (
     <div style={{ height: 325, width: "100%" }} className="bg-white">
       <EventCalendar
-        events={events}
-        onEventsChange={setEvents}
-        defaultVisibleDate={new Date(2024, 0, 15)}
+        events={calendarEvents}
+        defaultVisibleDate={new Date()}
         defaultView="month"
         views={["month"]}
         defaultPreferences={{
-          isSidePanelOpen: false, // Hides the left mini-calendar panel by default
+          isSidePanelOpen: false,
         }}
       />
     </div>

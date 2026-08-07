@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import { authClient } from "@/lib/auth-client";
-export type authStates = "user" | "guest" | "none";
+import { getAuthStateQuery } from "@/queries/auth.queries";
+export type authStates = "user" | "guest" | "none" | "loading";
 
 type AuthStateContextType = {
   authState: authStates;
@@ -10,10 +10,17 @@ type AuthStateContextType = {
 const AuthStateContext = createContext<AuthStateContextType | null>(null);
 
 export function AuthStateProvider({ children }: { children: React.ReactNode }) {
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = getAuthStateQuery();
   const [guestMode, setGuestMode] = useState(false);
 
-  const authState = session ? "user" : guestMode ? "guest" : "none";
+  const authState: authStates = isPending
+    ? "loading"
+    : session
+      ? "user"
+      : guestMode
+        ? "guest"
+        : "none";
+
   console.log("AUTH STATE: ", authState);
   console.log("SESSION DATA: ", session);
 

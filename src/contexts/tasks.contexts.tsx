@@ -4,10 +4,20 @@ import type {
   CalendarEvent,
   BasicTask,
 } from "@/lib/types/schema.types";
+import {
+  useEditTasksQuery,
+  useAddTasksQuery,
+  useDeleteTasksQuery,
+} from "@/queries/tasks.queries";
+
 type TasksContextType = {
   canvasTasks: CanvasTask[];
   basicTasks: BasicTask[];
   calendarEvents: CalendarEvent[];
+
+  editTask: (data: any) => void;
+  addTask: (data: any) => void;
+  deleteTask: (data: string) => void;
 };
 
 const TasksContext = createContext<TasksContextType | null>(null);
@@ -15,6 +25,10 @@ const TasksContext = createContext<TasksContextType | null>(null);
 export function TasksProvider({ children }: { children: React.ReactNode }) {
   const [canvasTasks] = useState<CanvasTask[]>([]);
   const [basicTasks] = useState<BasicTask[]>([]);
+
+  const editTaskMutation = useEditTasksQuery();
+  const addTaskMutation = useAddTasksQuery();
+  const deleteTaskMutation = useDeleteTasksQuery();
 
   const calendarEvents = useMemo(() => {
     const normalizedCanvas: CalendarEvent[] = canvasTasks.map((task) => ({
@@ -42,6 +56,9 @@ export function TasksProvider({ children }: { children: React.ReactNode }) {
         canvasTasks,
         basicTasks,
         calendarEvents,
+        editTask: editTaskMutation.mutate,
+        addTask: addTaskMutation.mutate,
+        deleteTask: deleteTaskMutation.mutate,
       }}
     >
       {children}
@@ -49,7 +66,7 @@ export function TasksProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useTasks() {
+export function useTasksContext() {
   const context = useContext(TasksContext);
   if (!context) {
     throw new Error("useTasks must be used within a TasksProvider");

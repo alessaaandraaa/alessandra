@@ -12,15 +12,9 @@ import type { BasicTask } from "@/lib/types/schema.types";
 
 type EditTaskProps = {
   taskData: BasicTask;
-  onEditTasks: (data: any) => void;
-  onDeleteTasks: (data: any) => void;
 };
 
-export default function TaskEditButton({
-  taskData,
-  onEditTasks,
-  onDeleteTasks,
-}: EditTaskProps) {
+export default function TaskEditButton({ taskData }: EditTaskProps) {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -34,12 +28,7 @@ export default function TaskEditButton({
         <DialogHeader>
           <DialogTitle>Edit Task</DialogTitle>
         </DialogHeader>
-        <EditTaskForm
-          onEditTasks={onEditTasks}
-          taskData={taskData}
-          onDeleteTasks={() => onDeleteTasks(taskData._id)}
-          onClose={() => setOpen(false)}
-        />
+        <EditTaskForm taskData={taskData} onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

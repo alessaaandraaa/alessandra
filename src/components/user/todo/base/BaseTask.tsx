@@ -3,15 +3,9 @@ import TaskEditButton from "./TaskEditButton";
 import { formatReadableDate } from "@/lib/utils";
 type TaskProps = {
   task: BasicTask;
-  onEditTasks: (data: any) => void;
-  onDeleteTasks: (data: any) => void;
 };
 
-export default function BaseTask({
-  task,
-  onEditTasks,
-  onDeleteTasks,
-}: TaskProps) {
+export default function BaseTask({ task }: TaskProps) {
   return (
     <div className="text-white mb-2 flex justify-between items-center bg-red-500/50 rounded-md p-1 px-2 shadow-2xl text-left min-w-60">
       <div>
@@ -21,11 +15,7 @@ export default function BaseTask({
         </p>
       </div>
       <div className="flex items-center gap-2">
-        <TaskEditButton
-          taskData={task}
-          onEditTasks={onEditTasks}
-          onDeleteTasks={onDeleteTasks}
-        />
+        <TaskEditButton taskData={task} />
       </div>
     </div>
   );

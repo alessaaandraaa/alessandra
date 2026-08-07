@@ -9,7 +9,6 @@ import { useState } from "react";
 import TasksPagination from "./TasksPagination";
 
 type props = {
-  onAddTasks: (data: any) => void;
   tasksPerPage: number;
   totalPosts: number;
   currentPage: number;
@@ -17,8 +16,7 @@ type props = {
   paginate: (pageNumber: number) => void;
 };
 
-export default function TaskButtonListBase({
-  onAddTasks,
+export default function TaskButtonList({
   tasksPerPage,
   totalPosts,
   currentPage,
@@ -54,7 +52,7 @@ export default function TaskButtonListBase({
         </DialogTrigger>
         <DialogContent className="sm:max-w-106.25">
           <DialogTitle>Add Task</DialogTitle>
-          <AddTaskForm onAddTasks={onAddTasks} onClose={() => setOpen(false)} />
+          <AddTaskForm onClose={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
     </div>

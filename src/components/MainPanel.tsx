@@ -4,7 +4,7 @@ import ImgLinksMain from "./user/links/ImgLinksMain";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RenderMonthCalendar from "./calendar/Calendar";
 import { Calendar, Link } from "lucide-react";
-
+import { TasksProvider } from "@/contexts/tasks.contexts";
 export default function MainPanel() {
   return (
     <div className="flex gap-5 cursor-pointer group select-none justify-center w-full">
@@ -30,7 +30,9 @@ export default function MainPanel() {
             <Playlist />
           </TabsContent>
           <TabsContent value="calendar" className="mt-0 h-full">
-            <RenderMonthCalendar />
+            <TasksProvider>
+              <RenderMonthCalendar />
+            </TasksProvider>
           </TabsContent>
         </div>
       </Tabs>

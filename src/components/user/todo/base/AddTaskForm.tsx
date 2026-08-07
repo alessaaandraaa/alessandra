@@ -5,13 +5,14 @@ import TaskFormFields, { formSchema } from "./TaskFormFields";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAddTasksQuery } from "@/queries/tasks.queries";
 
 type props = {
-  onAddTasks: (data: any) => void;
   onClose: () => void;
 };
 
-export default function AddTaskForm({ onAddTasks, onClose }: props) {
+export default function AddTaskForm({ onClose }: props) {
+  const add = useAddTasksQuery();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,7 +28,7 @@ export default function AddTaskForm({ onAddTasks, onClose }: props) {
       ...data,
       status: "ongoing",
     };
-    onAddTasks(body);
+    add.mutateAsync(body);
     form.reset();
     onClose();
   }
