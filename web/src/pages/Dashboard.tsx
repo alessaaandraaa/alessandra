@@ -9,14 +9,15 @@ export default function Dashboard() {
 
   return (
     <>
-      {authState === "guest" && (
-        <Link
-          to="/login"
-          className="absolute top-0 right-0 text-white text-xs bg-black/50 rounded-xl px-3 py-2"
-        >
-          Login
-        </Link>
-      )}
+      {authState === "guest" ||
+        (authState === "none" && (
+          <Link
+            to="/login"
+            className="absolute top-0 right-0 text-white text-xs bg-black/50 rounded-xl px-3 py-2"
+          >
+            Login
+          </Link>
+        ))}
 
       <MainPanel />
     </>

@@ -9,10 +9,10 @@
     }
   ],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["chrome", "node"]
+    "types": ["chrome", "node"],
+    "ignoreDeprecations": "6.0"
   }
 }

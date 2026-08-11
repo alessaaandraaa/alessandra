@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import type { CalendarEvent } from "@/lib/types/schema.types";
 import { getCanvasQuery } from "@/queries/canvas.queries";
 import { getTasksQuery } from "@/queries/tasks.queries";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export default function RenderMonthCalendar() {
   const { data: canvasTasks } = getCanvasQuery();
@@ -28,17 +29,34 @@ export default function RenderMonthCalendar() {
     return [...normalizedCanvas, ...normalizedBasic];
   }, [canvasTasks, basicTasks]);
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+      text: {
+        primary: "#ffffff",
+        secondary: "rgba(255,255,255,0.7)",
+      },
+      background: {
+        default: "transparent",
+        paper: "transparent",
+      },
+    },
+  });
+
   return (
-    <div style={{ height: 325, width: "100%" }} className="bg-white">
-      <EventCalendar
-        events={calendarEvents}
-        defaultVisibleDate={new Date()}
-        defaultView="month"
-        views={["month"]}
-        defaultPreferences={{
-          isSidePanelOpen: false,
-        }}
-      />
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <div style={{ height: 368, width: "100%" }} className="[&_*]:!text-white">
+        <EventCalendar
+          events={calendarEvents}
+          defaultVisibleDate={new Date()}
+          readOnly
+          defaultView="month"
+          views={["month"]}
+          defaultPreferences={{
+            isSidePanelOpen: false,
+          }}
+        />
+      </div>
+    </ThemeProvider>
   );
 }

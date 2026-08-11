@@ -30,7 +30,7 @@ export const useAddTasksQuery = () => {
       const prevTasks = queryClient.getQueryData<any[]>(["tasks", authState]);
       queryClient.setQueryData(["tasks", authState], (old: any) => [
         ...(old ?? []),
-        newTask,
+        { ...newTask, _id: crypto.randomUUID() },
       ]);
 
       return { prevTasks };
