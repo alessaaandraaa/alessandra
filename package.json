@@ -19,12 +19,13 @@
     "frontend": "cd web && npm run dev",
     "backend": "cd api && npx tsx server.ts",
     "dev": "npm run frontend",
-    "build": "tsc -b && vite build",
+    "build": "cd web && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky"
   },
   "devDependencies": {
-    "concurrently": "^10.0.4"
+    "concurrently": "^10.0.4",
+    "typescript": "^7.0.2"
   }
 }
