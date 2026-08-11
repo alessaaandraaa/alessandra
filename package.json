@@ -19,7 +19,7 @@
     "frontend": "cd web && npm run dev",
     "backend": "cd api && npx tsx server.ts",
     "dev": "npm run frontend",
-    "build": "cd web && tsc -b && vite build",
+    "build": "cd web && tsc -b tsconfig.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky"
