@@ -10,21 +10,25 @@ export default function RenderMonthCalendar() {
   const { data: basicTasks } = getTasksQuery();
 
   const calendarEvents = useMemo(() => {
-    const normalizedCanvas: CalendarEvent[] = canvasTasks.map((task: any) => ({
-      id: task.id,
-      title: task.name,
-      start: task.due,
-      end: task.due,
-      readOnly: true,
-    }));
+    const normalizedCanvas: CalendarEvent[] = (canvasTasks ?? []).map(
+      (task: any) => ({
+        id: task.id,
+        title: task.name,
+        start: task.due,
+        end: task.due,
+        readOnly: true,
+      }),
+    );
 
-    const normalizedBasic: CalendarEvent[] = basicTasks.map((task: any) => ({
-      id: task._id,
-      title: task.name,
-      start: task.dueDate,
-      end: task.dueDate,
-      readOnly: true,
-    }));
+    const normalizedBasic: CalendarEvent[] = (basicTasks ?? []).map(
+      (task: any) => ({
+        id: task._id,
+        title: task.name,
+        start: task.dueDate,
+        end: task.dueDate,
+        readOnly: true,
+      }),
+    );
 
     return [...normalizedCanvas, ...normalizedBasic];
   }, [canvasTasks, basicTasks]);
