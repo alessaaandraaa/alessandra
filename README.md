@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# Alessandra
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personalized new tab dashboard extension for organizing your workflow.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Quick Links** — Pin frequently used sites with custom icons, organized by tabs
+- **To-Do List** — Manage personal tasks with priority levels and due dates
+- **Canvas Integration** — Automatically pulls assignments from Canvas LMS
+- **Spotify Player** — Control Spotify playback without switching tabs (owner only)
+- **Calendar** — View tasks and assignments in a monthly calendar view
+- **Guest Mode** — Try the dashboard without an account (data stored in localStorage)
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Frontend:** React, TypeScript, TailwindCSS, shadcn/ui, React Query  
+**Backend:** Node.js, Express, TypeScript, BetterAuth  
+**Database:** MongoDB  
+**APIs:** Spotify Web API, Canvas LMS API  
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
+- Node.js 18+
+- MongoDB instance
+- Spotify Developer account (for Spotify features)
+- Canvas API token (for Canvas features)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Clone the repo
+git clone https://github.com/alessaaandraaa/alessandra.git
+cd alessandra
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Install frontend dependencies
+cd web && npm install
+
+# Install backend dependencies
+cd ../api && npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**Frontend (`web/.env`):**
 ```
+VITE_API_URL=your_backend_url
+VITE_BETTER_AUTH_URL=your_backend_url
+VITE_USER_ID=your_user_id
+```
+
+**Backend (`api/.env`):**
+```
+DATABASE_URL=your_mongodb_url
+BETTER_AUTH_SECRET=your_secret
+BETTER_AUTH_URL=your_backend_url
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+CANVAS_URL=your_canvas_url
+CANVAS_TOKEN=your_canvas_token
+```
+
+### Running Locally
+
+```bash
+# From root
+npm run frontend   # starts frontend on localhost:5173
+npm run backend    # starts backend on localhost:3000
+```
+
+
+## Notes
+
+- Spotify features are restricted to the owner account only
+- Canvas integration requires a personal Canvas API token
