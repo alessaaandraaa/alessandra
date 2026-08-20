@@ -19,25 +19,41 @@ export const getLinksQuery = () => {
 export const useAddLinksQuery = () => {
   const { authState, repo } = useLinkRepository();
   const queryClient = useQueryClient();
-  return useMutation<any, Error, any, { prevLinks?: any[] }>({
+
+  return useMutation<any, Error, any, { prevLinks?: any[]; tempId: string }>({
     mutationFn: async (data) => {
       return await repo.addLinks(data);
     },
-    onMutate: async (newLink: any) => {
-      await queryClient.cancelQueries({ queryKey: ["links", authState] });
+
+    onMutate: async (newLink) => {
+      await queryClient.cancelQueries({
+        queryKey: ["links", authState],
+      });
 
       const prevLinks = queryClient.getQueryData<any[]>(["links", authState]);
-      queryClient.setQueryData(["links", authState], (old: any) => [
-        ...(old ?? []),
-        newLink,
+
+      const tempId = crypto.randomUUID();
+
+      const optimisticLink = {
+        ...newLink,
+        id: tempId,
+      };
+
+      queryClient.setQueryData<any[]>(["links", authState], (old = []) => [
+        ...old,
+        optimisticLink,
       ]);
 
-      return { prevLinks };
+      return { prevLinks, tempId };
     },
-    onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ["links", authState] });
+
+    onSuccess: (createdLink, _variables, context) => {
+      queryClient.setQueryData<any[]>(["links", authState], (old = []) =>
+        old.map((link) => (link.id === context.tempId ? createdLink : link)),
+      );
     },
-    onError: (_error, _variables, context: any) => {
+
+    onError: (_error, _variables, context) => {
       if (context?.prevLinks) {
         queryClient.setQueryData(["links", authState], context.prevLinks);
       }

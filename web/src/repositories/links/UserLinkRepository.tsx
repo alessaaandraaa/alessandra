@@ -10,6 +10,7 @@ export class UserLinkRepository implements LinkRepository {
         withCredentials: true,
       },
     );
+    console.log("DATA IMAGE: ", response.data);
     return response.data;
   }
 
@@ -24,9 +25,9 @@ export class UserLinkRepository implements LinkRepository {
     return response.data;
   }
   async editLinks(link: Link) {
-    const { _id, ...rest } = link;
+    const { id, ...rest } = link;
     const { data } = await axios.put(
-      `${import.meta.env.VITE_API_URL}/api/links/${_id}`,
+      `${import.meta.env.VITE_API_URL}/api/links/${id}`,
       rest,
       {
         withCredentials: true,

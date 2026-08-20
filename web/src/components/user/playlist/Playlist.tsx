@@ -9,8 +9,8 @@ export default function Playlist() {
   const { isBlocked } = useSingleTab();
   const shouldEnablePlayer = !isBlocked;
 
-  const { session } = useAuthStateContext();
-  const isOwner = session?.user.id === import.meta.env.VITE_USER_ID;
+  const { userId, isPending } = useAuthStateContext();
+  const isOwner = !isPending && userId === import.meta.env.VITE_USER_ID;
 
   const {
     isReady,
@@ -27,12 +27,12 @@ export default function Playlist() {
   } = useSpotifyPlayer(token, shouldEnablePlayer);
 
   if (!isOwner) {
-    return <p className="h-[120px]">TEST</p>;
+    return <p className="h-30">TEST</p>;
   }
 
   if (!token) {
     return (
-      <div className="h-[120px] p-4 flex justify-center items-center">
+      <div className="h-30 p-4 flex justify-center items-center">
         <button
           onClick={login}
           className="bg-white text-black px-6 py-3 rounded-full font-bold"
@@ -46,7 +46,7 @@ export default function Playlist() {
 
   if (isBlocked) {
     return (
-      <div className="h-[120px] p-4 font-mono text-gray-500 select-none">
+      <div className="h-30 p-4 font-mono text-gray-500 select-none">
         <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-white text-center text-xs font-bold">
           Currently playing in another tab
         </div>
@@ -55,7 +55,7 @@ export default function Playlist() {
   }
 
   return (
-    <div className="p-4 font-mono text-gray-500 select-none h-[120px]">
+    <div className="p-4 font-mono text-gray-500 select-none h-30">
       <div className="bg-zinc-500/50 m-2 rounded-2xl backdrop-blur-md p-2 text-white text-center text-xs font-bold">
         {track || "Ready to Play"}
       </div>

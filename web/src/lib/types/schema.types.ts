@@ -24,7 +24,8 @@ export interface BasicTask extends BaseTask {
 }
 
 export interface Link {
-  _id: string;
+  _id?: string;
+  id?: string;
   name: string;
   link: string;
   image: string;
