@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const STALE_TIME = 1000 * 60 * 5;
+const STALE_TIME = 1000 * 60 * 30;
 
 export const getCanvasQuery = () => {
   return useQuery({

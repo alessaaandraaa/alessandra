@@ -3,7 +3,7 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useLinkRepository } from "@/repositories/repo.hooks";
 
-const STALE_TIME = 1000 * 60 * 5;
+const STALE_TIME = 1000 * 60 * 30;
 
 export const getLinksQuery = () => {
   const { authState, repo } = useLinkRepository();

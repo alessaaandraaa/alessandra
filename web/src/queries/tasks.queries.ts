@@ -2,7 +2,7 @@
 
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useTaskRepository } from "@/repositories/repo.hooks";
-const STALE_TIME = 1000 * 60 * 5;
+const STALE_TIME = 1000 * 60 * 30;
 
 export const getTasksQuery = () => {
   const { authState, repo } = useTaskRepository();
