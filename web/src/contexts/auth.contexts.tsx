@@ -1,5 +1,9 @@
+"use client";
+
 import { createContext, useContext, useState } from "react";
+
 import { getAuthStateQuery } from "@/queries/auth.queries";
+
 export type authStates = "user" | "guest" | "none" | "loading";
 
 type AuthStateContextType = {
@@ -13,20 +17,18 @@ const AuthStateContext = createContext<AuthStateContextType | null>(null);
 
 export function AuthStateProvider({ children }: { children: React.ReactNode }) {
   const { data: session, isPending } = getAuthStateQuery();
+
   const [guestMode, setGuestMode] = useState(false);
 
   const userId = session?.data?.user?.id ?? null;
 
-  const authState: authStates = isPending
-    ? "loading"
-    : session
-      ? "user"
+  const authState: authStates = session
+    ? "user"
+    : isPending
+      ? "loading"
       : guestMode
         ? "guest"
         : "none";
-
-  console.log("AUTH STATE: ", authState);
-  console.log("SESSION DATA: ", session);
 
   return (
     <AuthStateContext.Provider
@@ -44,9 +46,12 @@ export function AuthStateProvider({ children }: { children: React.ReactNode }) {
 
 export const useAuthStateContext = () => {
   const ctx = useContext(AuthStateContext);
-  if (!ctx)
+
+  if (!ctx) {
     throw new Error(
       "useAuthStateContext must be used within AuthStateProvider",
     );
+  }
+
   return ctx;
 };

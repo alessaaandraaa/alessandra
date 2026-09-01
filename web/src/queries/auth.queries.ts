@@ -3,10 +3,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
+export const AUTH_STATE_QUERY_KEY = ["auth-state"];
+
 const STALE_TIME = 1000 * 60 * 30; // 30 minutes
 const REFETCH_INTERVAL = 1000 * 60 * 5; // 5 minutes
-
-export const AUTH_STATE_QUERY_KEY = ["auth-state"];
 
 export const getAuthStateQuery = () => {
   return useQuery({
@@ -18,6 +18,9 @@ export const getAuthStateQuery = () => {
 
     staleTime: STALE_TIME,
     refetchInterval: REFETCH_INTERVAL,
+
+    // Use cached data immediately.
+    // If stale, refresh in the background.
     refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
