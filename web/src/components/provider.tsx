@@ -16,7 +16,7 @@ export default function QueryProvider({ children }: Props) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            gcTime: 1000 * 60 * 60 * 24 * 30, // 30 days
+            gcTime: 1000 * 60 * 60 * 24 * 30,
           },
         },
       }),

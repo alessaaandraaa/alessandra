@@ -5,22 +5,17 @@ import { authClient } from "@/lib/auth-client";
 
 export const AUTH_STATE_QUERY_KEY = ["auth-state"];
 
-const STALE_TIME = 1000 * 60 * 30; // 30 minutes
-const REFETCH_INTERVAL = 1000 * 60 * 5; // 5 minutes
-
 export const getAuthStateQuery = () => {
   return useQuery({
     queryKey: AUTH_STATE_QUERY_KEY,
 
-    queryFn: async () => {
-      return await authClient.getSession();
-    },
+    queryFn: () => authClient.getSession(),
 
-    staleTime: STALE_TIME,
-    refetchInterval: REFETCH_INTERVAL,
+    staleTime: 1000 * 60 * 30,
 
-    // Use cached data immediately.
-    // If stale, refresh in the background.
+    // Periodically verify the server-side session.
+    refetchInterval: 1000 * 60 * 5,
+
     refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
